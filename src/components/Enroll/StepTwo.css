@@ -1,0 +1,115 @@
+/* StepTwo.css */
+
+/* General styles */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px;
+    opacity: 0; /* Initially set opacity to 0 for fade-in effect */
+    animation: fadeIn 1s forwards; /* Animation for fade-in effect */
+  }
+  
+  .col-md-6,
+  .col-md-8 {
+    flex: 0 0 48%;
+    margin-bottom: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .col-md-6,
+    .col-md-8 {
+      flex: 0 0 100%;
+    }
+  }
+  
+  .form-control {
+    width: 100%;
+    transition: border-color 0.3s ease; /* Transition for input border color */
+  }
+  
+  /* Dropzone styles */
+  .dropzone-container {
+    width: 100%;
+    opacity: 0; /* Initially set opacity to 0 for fade-in effect */
+    animation: fadeIn 1s forwards; /* Animation for fade-in effect */
+  }
+  
+  .Drop-zone {
+    width: 100%;
+    border-radius: 4px;
+    padding: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transition for dropzone background color */
+  }
+  
+  .dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    border: 2px dashed #360c0c;
+    border-radius: 15px;
+
+
+  }
+  
+  /* Preview styles */
+  .preview-container {
+    margin-top: 10px;
+    opacity: 0; /* Initially set opacity to 0 for fade-in effect */
+    animation: fadeIn 1s forwards; /* Animation for fade-in effect */
+  }
+  
+  .preview-image {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: opacity 0.3s ease; /* Transition for preview image opacity */
+  }
+  
+  /* Text styles */
+  .text-center {
+    text-align: center;
+  }
+  
+  /* Button and Spinner styles */
+  .btn-navcomponent {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    opacity: 0; /* Initially set opacity to 0 for fade-in effect */
+    animation: fadeIn 1s forwards; /* Animation for fade-in effect */
+  }
+  
+  .btn-navform {
+    flex: 0 0 48%;
+    transition: background-color 0.3s ease; /* Transition for button background color */
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .spinner-border {
+    color: #fff;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  

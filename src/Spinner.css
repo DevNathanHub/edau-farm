@@ -1,0 +1,55 @@
+/* Spinner styling */
+.spin-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    border: none; /* Border for a defined boundary */
+    padding: 20px; /* Added padding for space */
+  }
+  
+  .spin {
+    display: inline-block;
+    vertical-align: middle; /* Improved vertical alignment */
+    border: none; /* Thicker border for visibility */
+    border-top: 4px solid transparent; /* Transparent top border for animation effect */
+    border-radius: 50%;
+    width: 40px; /* Adjusted size for better visibility */
+    height: 40px;
+    animation: spin 0.75s linear infinite;
+  }
+  
+  .spinner-icon {
+    width: 40px;
+    height: 40px;
+    fill: #3498db; /* Fill color for icon if applicable */
+  }
+  
+  .loading-text {
+    font-size: 18px; /* Increased font size for emphasis */
+    margin-top: 10px;
+    color: #333;
+    font-family: 'Helvetica', sans-serif; /* Font family for better readability */
+    text-align: center; /* Centered text for a cleaner appearance */
+  }
+  
+  /* Add any additional styles for your component here */
+  
+  /* Keyframes for smooth animation */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+ 
+  .spin-container:hover {
+    cursor: pointer;
+    transform: scale(1.05); /* Slight scaling on hover for interactive feedback */
+    transition: transform 0.3s ease-in-out; /* Smooth transition for a polished feel */
+  }
+  

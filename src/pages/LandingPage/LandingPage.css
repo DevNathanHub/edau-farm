@@ -1,0 +1,13 @@
+.enroll{
+    background-color: rgba(0, 0, 255, 0.247);
+    width: 200px;
+    padding: 10px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.enroll-link{
+    text-decoration: none;
+    font-size: 23px;
+}
