@@ -10,10 +10,8 @@ function Success() {
   const { width, height } = useWindowSize();
 
   useEffect(() => {
-    // Display success notification
     toast.success('Success!', { autoClose: 2000 });
 
-    // Redirect to the home page after 3 seconds
     const redirectTimer = setTimeout(() => {
       navigate('/');
       window.location.reload();

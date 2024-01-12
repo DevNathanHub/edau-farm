@@ -10,7 +10,9 @@ import CovidSafetyIcon from '../Benefits/SvgIcons/CovidSafety.gif';
 
 function Benefits() {
   return (
+    
     <div className="benefit">
+
       {/* Row 1 */}
       <div className="benefit-item">
         <img src={TravelPerksIcon} alt="Travel & Perks Icon" className="benefit-icon" />

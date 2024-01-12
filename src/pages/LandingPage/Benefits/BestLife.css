@@ -1,0 +1,88 @@
+/* BestLife.css */
+
+.benefitslifecontainer {
+    font-family: 'Arial', sans-serif; /* You can replace 'Arial' with your preferred font */
+    padding: 40px;
+    border-radius: 20px;
+    background-position: center;
+    margin-bottom: 40px;
+    margin-top: 40px;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(17, 25, 40, 0.09);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+  }
+  
+  .benefitslifecontainer .container {
+    background-color: #fff; /* Background color for the container */
+    border-radius: 8px; /* Rounded corners for the container */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle lift effect */
+    padding: 20px; /* Padding inside the container */
+  }
+  
+  .benefitslifecontainer h2 {
+    color: #007bff; /* Heading color */
+  }
+  
+  .benefitslifecontainer .benefits-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .benefitslifecontainer .benefit-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px; /* Increased margin for better separation between items */
+    font-size: 20px; /* Font size for benefit items */
+    font-weight: 700;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 12px;
+    border: 1px solid rgba(209, 213, 219, 0.3);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+  
+  .benefitslifecontainer .icon {
+    margin-right: 12px; /* Increased margin for better spacing between icon and text */
+    font-size: 20px; /* Font size for icons */
+    color: #28a745; /* Icon color */
+    padding: 5px;
+    border-radius: 12px;
+    height: 70px;
+    width: 70px;
+  }
+  
+  .benefitslifecontainer .col-lg-6 {
+    gap: 20px; /* Gap between columns */
+  }
+  
+  .benefitslifecontainer p {
+    font-size: 18px; /* Font size for additional text */
+    color: #888; /* Text color for additional text */
+  }
+  @media (max-width: 767px) {
+    .benefitslifecontainer {
+      padding: 20px;
+      border-radius: 12px;
+    }
+  
+    .benefitslifecontainer .benefit-item {
+      font-size: 14px;
+      margin-bottom: 10px;
+      width: 300px;
+    }
+  
+    .benefitslifecontainer .icon {
+        height: 30px;
+        width:  30px !important;
+      }
+  
+    .benefitslifecontainer p {
+      font-size: 14px;
+    }
+  }

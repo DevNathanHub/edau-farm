@@ -21,7 +21,7 @@ import Success from "./components/Success/success";
 import Logout from "./components/Logout/Logout";
 import Footer from "./Sections/Footer/footer";
 import Contact from "./pages/ContactUs/contact";
-
+import CleaningSet from "./pages/LandingPage/CleaningSet/CleaningSet";
 function App() {
 	
   
@@ -61,6 +61,10 @@ function App() {
 				<Route
 					path="/contact"
 					element={<Contact/>}
+				/>
+				<Route
+					path="/cleaningset"
+					element={<CleaningSet/>}
 				/>
 				
 				</Routes>

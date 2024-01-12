@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Benefits from './Benefits/Benefits';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import './LandingPage.css';
-
+import HiringSection from './WereHiring/werehiring';
+import BestLife from './Benefits/BestLife';
+import { Link } from 'react-router-dom';
 function Home() {
   const [firstname, setFirstName] = useState('');
 
@@ -17,23 +18,28 @@ function Home() {
   }, []); // Empty dependency array ensures that the effect runs once when the component mounts
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 home">
       {firstname ? (
         <div>
-          <h2>Welcome, {firstname}!</h2>
+          <div className="welcome-text">👋  Welcome, {firstname}!</div>
           <div className="enroll">
-            <Link to="/enroll" className="btn btn-primary" disabled={!firstname}>
-              Enroll As a Member
-            </Link>
+            <HiringSection/>
+         
           </div>
         </div>
       ) : (
-        <div>
-          <h2>Welcome to Our Community</h2>
-          <div className="enroll">
-            <Link to="/sign-up" className="btn btn-success">
-              Get Started
-            </Link>
+        <div className='home'>
+          <div className="welcome-text">👋   Welcome to Our Community</div>
+          <div >
+          <HiringSection/>
+
+            
+          </div>
+          <div className='cleaningSet'>
+            <Link to='/cleaningset'>Purchase Cleaning Set</Link>
+            </div>
+          <div>
+            <BestLife/>
           </div>
         </div>
       )}
