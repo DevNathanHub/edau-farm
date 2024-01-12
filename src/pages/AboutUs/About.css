@@ -21,7 +21,7 @@
   
   .static-content p {
     color: #495057;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 1.5;
   }
   .additions{
@@ -46,7 +46,7 @@
   
   .additional-content p {
     color: #495057;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.5;
   }
   
@@ -98,12 +98,18 @@
     .static-content p,
     .additional-content p,
     .card-text {
-      font-size: 14px;
+      font-size: 17px;
     }
   
     .additional-content h3,
     .card-title {
       font-size: 18px;
+    }
+    .additions{
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      
     }
   }
   

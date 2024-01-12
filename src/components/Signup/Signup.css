@@ -51,7 +51,7 @@
     padding: 12px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 15px;
     transition: border-color 0.3s ease; /* Add a smooth transition for better user experience */
   }
   
@@ -63,7 +63,8 @@
     border-color: #e74c3c; /* Change input border color for invalid inputs */
   }
   
-  .signup-container  button {
+  .submit-btn{
+    width: 95%;
     margin-top: 20px;
     background-color: #4caf50;
     color: #fff;
@@ -74,8 +75,9 @@
     transition: background-color 0.3s ease; /* Add a smooth transition for better user experience */
   }
   
-  .signup-container  button:hover {
-    background-color: #45a049;
+  .submit-btn:hover {
+    background-color: #09034e;
+
   }
   
   .signup-container  .social-media-buttons {
@@ -104,7 +106,13 @@
   
   @media (max-width: 600px) {
     .signup-container {
-      width: 80%; /* Adjust container width for smaller screens */
+      width: 95%; 
+    }
+    .submit-btn:hover{
+      width: 95%;
+    }
+    .form-group input::placeholder{
+      font-style: italic;
     }
   }
   

@@ -83,7 +83,7 @@ function Enroll() {
       formDataToSend.append('licenseBack', formData.licenseBack);
   
       // Send data to the server using Axios
-      const response = await axios.post('http://localhost:5000/enroll', formDataToSend, {
+      const response = await axios.post('https://community-api-p8vv.onrender.com/enroll', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -146,7 +146,7 @@ function Enroll() {
   return (
     <div className="apply-component">
       <div className='title'>Enroll as A Member</div>
-      <div className="large-text">There are 80,000+ reasons to join Delta.</div>
+      <div className="caution"><AiOutlineWarning/> Ensure you fill out all required information.</div>
       <div className="enroll-container mt-5">
         {currentStep === 1 && (
           <StepOne

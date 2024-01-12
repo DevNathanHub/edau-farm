@@ -45,7 +45,7 @@ const Signup = () => {
       // Make the Axios request here
       console.log(' form body data', formBodyData);
 
-      const response = await axios.post('http://localhost:5000/signup', formBodyData);
+      const response = await axios.post('https://community-api-p8vv.onrender.com/signup', formBodyData);
 
       // Handle the response as needed
       console.log(response.data);
@@ -90,7 +90,7 @@ const Signup = () => {
              
 
             <div className="form-group">
-              <button type="submit" disabled={loading}>
+              <button type="submit" disabled={loading} className="submit-btn">
                 {loading ? 'Loading...' : 'SUBMIT'}
               </button>
             </div>

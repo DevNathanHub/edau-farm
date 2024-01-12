@@ -54,7 +54,11 @@
 
 
   }
-  
+  .drop-text{
+    padding: 10px;
+    font-style: italic;
+    opacity: 70%;
+  }
   /* Preview styles */
   .preview-container {
     margin-top: 10px;
@@ -79,14 +83,20 @@
   .btn-navcomponent {
     margin-top: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     opacity: 0; /* Initially set opacity to 0 for fade-in effect */
     animation: fadeIn 1s forwards; /* Animation for fade-in effect */
   }
   
-  .btn-navform {
+  .btn-back, .btn-submit {
     flex: 0 0 48%;
-    transition: background-color 0.3s ease; /* Transition for button background color */
+    transition: background-color 0.3s ease; 
+   
+    width: 47%;
+    border-radius: 20px;
+    height: 45px;
   }
   
   .btn-secondary {

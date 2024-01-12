@@ -21,6 +21,10 @@
   .ContactUs label {
     margin-bottom: 8px;
     font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    margin-left: 10px;
+    opacity: 70%;
   }
   
   .ContactUs input,
@@ -55,4 +59,18 @@
   .ContactUs button:hover {
     background-color: #0056b3;
   }
-  
+  @media (max-width: 768px) {  
+      
+.ContactUs {
+  width: 95%;
+  margin: 10px;
+  margin-top: 20px ;
+  margin-bottom: 20px;
+}
+.contact-header {
+  text-align: center;
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+  }

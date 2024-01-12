@@ -10,7 +10,7 @@
   }
   
   .enroll-container {
-    max-width: 80%;
+    max-width: 95%;
     margin: auto;
 
     padding-right: 40px;
@@ -36,6 +36,15 @@
     }
   }
   
+  .caution{
+    margin: 20px;
+    font-style: italic;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+  }
+
   .apply-component .form-group {
     width: 100%; /* Make form groups full width */
     margin-bottom: 15px;
@@ -48,7 +57,7 @@
     padding: 12px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 15px;
     transition: border-color 0.3s ease; /* Add a border color transition */
   }
   
@@ -60,11 +69,10 @@
     border-color: #e74c3c;
   }
   
-  .apply-component button {
+  .apply-component .btn-navform{
     width: 100%; /* Make button full width */
-    padding: 12px;
     border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease; /* Add a background color transition */
   }

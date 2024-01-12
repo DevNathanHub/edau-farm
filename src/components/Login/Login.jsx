@@ -34,7 +34,7 @@ const Login = () => {
       // Make the Axios request here
       console.log('form body data', formBodyData);
 
-      const response = await axios.post('http://localhost:5000/login', formBodyData);
+      const response = await axios.post('https://community-api-p8vv.onrender.com/login', formBodyData);
 
       // Handle the response as needed
       console.log(response.data);
@@ -68,7 +68,7 @@ const Login = () => {
               <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
             </div>
             <div className="form-group">
-              <button type="submit" disabled={loading}>
+              <button type="submit" disabled={loading} className="login-btn">
                 {loading ? 'Loading...' : 'LOGIN'}
               </button>
             </div>

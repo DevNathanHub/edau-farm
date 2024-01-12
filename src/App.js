@@ -38,7 +38,7 @@ function App() {
 				/>
 				<Route path="/team" element={<Teams />} />
 				<Route path="/blogs" element={<Blogs />} />
-        <Route
+				<Route
 					path="/enroll"
 					element={<Enroll />}
 				/>

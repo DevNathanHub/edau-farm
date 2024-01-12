@@ -60,7 +60,8 @@
     border-color: #e74c3c; /* Change input border color for invalid inputs */
   }
   
-  button {
+  .login-btn {
+    width: 95%;
     margin-top: 20px;
     background-color: #4caf50;
     color: #fff;
@@ -71,7 +72,7 @@
     transition: background-color 0.3s ease; /* Add a smooth transition for better user experience */
   }
   
-  button:hover {
+  .login-btn:hover {
     background-color: #45a049;
   }
   

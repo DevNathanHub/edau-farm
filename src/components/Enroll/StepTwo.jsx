@@ -110,19 +110,19 @@
             </div>
 
             <div className="mb-12 btn-navcomponent">
-            <button type="button" className="btn btn-secondary me-2 btn-navform" onClick={prevStep}>
+            <button type="button" className="btn-back" onClick={prevStep}>
                 Back
             </button>
             <button
                 type="button"
-                className="btn btn-primary btn-navform"
+                className="btn-submit"
                 onClick={handleSendDataToServer}
                 disabled={loading}
             >
                 {loading ? (
                 <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                 ) : null}
-                {loading ? 'Submitting...' : 'SUBMIT'}
+                {loading ? 'Submitting...' : 'Submit'}
             </button>
             </div>
         </div>

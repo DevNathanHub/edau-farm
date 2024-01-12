@@ -44,6 +44,9 @@
   .icon:hover {
     animation: pulse 0.5s infinite;
   }
+  .container p{
+    font-size: 17px;
+  }
 
   /* Define the pulse animation */
   @keyframes pulse {
