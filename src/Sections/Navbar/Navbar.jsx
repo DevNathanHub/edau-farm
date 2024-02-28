@@ -29,7 +29,7 @@ const Navbar = () => {
         type="button"
         onClick={toggleMenu}
       >
-        {isOpen ? <HiOutlineX onClick={closeMenu} /> : <HiOutlineMenuAlt3 />}
+        {isOpen ? <HiOutlineX  /> : <HiOutlineMenuAlt3 />}
       </button>
 
       <div
@@ -37,7 +37,7 @@ const Navbar = () => {
           show: isOpen,
         })}
       >
-        <ul className="navbar-nav ml-auto "> 
+        <ul className="navbar-nav ml-auto " onClick={closeMenu}> 
           <li className="nav-item">
             <Link className="nav-link navbar-links" to="/shop">
               Shop
