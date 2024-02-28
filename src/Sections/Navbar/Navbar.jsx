@@ -9,16 +9,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    // Your logic to check if the user exists on localhost
-    const userExists = localStorage.getItem("user");
-    
-    console.log(userExists);
-
-    if (userExists) {
-      setUser(JSON.parse(userExists));
-    }
-  }, []);
+ 
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -31,14 +22,14 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link className="navbar-brand logo-section" to="/">
-        Your Logo
+        Edau Honey
       </Link>
       <button
         className="navbar-toggler"
         type="button"
         onClick={toggleMenu}
       >
-        {isOpen ? <HiOutlineX /> : <HiOutlineMenuAlt3 />}
+        {isOpen ? <HiOutlineX onClick={closeMenu} /> : <HiOutlineMenuAlt3 />}
       </button>
 
       <div
@@ -48,28 +39,33 @@ const Navbar = () => {
       >
         <ul className="navbar-nav ml-auto "> {/* Use ml-auto to align links to the right on large devices */}
           <li className="nav-item">
+            <Link className="nav-link navbar-links" to="/shop">
+              Shop
+            </Link>
+          </li>
+          <li className="nav-item">
             <Link className="nav-link navbar-links" to="/about">
-              About
+              About Us
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link navbar-links" to="/annual">
-              Annual Report
+            <Link className="nav-link navbar-links" to="/products">
+              Our Products
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link navbar-links" to="/team">
-              Team
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link navbar-links" to="/blogs">
-              Blogs
+            <Link className="nav-link navbar-links" to="/blog">
+              Blog
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link navbar-links" to="/contact">
-              Contact
+              Contact Us
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link navbar-links" to="/faq">
+              FAQ
             </Link>
           </li>
         </ul>
