@@ -22,7 +22,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link className="navbar-brand logo-section" to="/">
-        Edau Honey
+        <h4>Edau<span className='primary'>Honey</span></h4>
       </Link>
       <button
         className="navbar-toggler"
@@ -37,7 +37,7 @@ const Navbar = () => {
           show: isOpen,
         })}
       >
-        <ul className="navbar-nav ml-auto "> {/* Use ml-auto to align links to the right on large devices */}
+        <ul className="navbar-nav ml-auto "> 
           <li className="nav-item">
             <Link className="nav-link navbar-links" to="/shop">
               Shop
