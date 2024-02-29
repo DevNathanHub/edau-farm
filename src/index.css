@@ -2,7 +2,7 @@
 
 :root {
   --primary: #118c4f;
-  --background: #f5f8ff;
+  --background: #e5ecfc;
 }
 
 .primary {
@@ -36,6 +36,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: black;
 }
 
 code {

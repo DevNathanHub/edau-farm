@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
+import { CiLogin } from "react-icons/ci";
+import { IoCreateOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 import { FaUserCircle } from "react-icons/fa";
 import "./Navbar.css";
+import Cart from "../../Components/Shop/Cart";
+import { Button, Stack } from "@chakra-ui/react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,6 +41,7 @@ const Navbar = () => {
           show: isOpen,
         })}
       >
+        <div>
         <ul className="navbar-nav ml-auto " onClick={closeMenu}> 
           <li className="nav-item">
             <Link className="nav-link navbar-links" to="/shop">
@@ -68,7 +73,14 @@ const Navbar = () => {
               FAQ
             </Link>
           </li>
+          <li className="nav-cart">
+            <div className="cart-section">
+              <Cart/>
+            </div>
+          </li>
         </ul>
+        
+        </div>
 
         <div className="user-info">
           {user ? (
@@ -80,12 +92,19 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="auth">
-              <Link to="/sign-up" className="nav-link">
-                Sign Up
-              </Link>
-              <Link to="/log-in" className="nav-link">
-                Login
-              </Link>
+              <Stack direction='row' spacing={4}>
+                <Link to="/signup" className="nav-link">
+                  <Button leftIcon={<IoCreateOutline />} colorScheme='blue' variant='solid'>
+                    Signup
+                  </Button>
+                </Link>
+
+                <Link to="/login" className="nav-link">
+                  <Button rightIcon={<CiLogin />} colorScheme='blue' variant='outline'>
+                    Login
+                  </Button>
+                </Link>
+              </Stack>
             </div>
           )}
         </div>

@@ -1,0 +1,27 @@
+.cart-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+
+.remove-cart-item{
+    color: red;
+    position:absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+   
+}
+.remove-icon{
+     transition: all 0.3s ease-in-out;
+}
+.remove-icon:hover{
+    transform: scale(1.5);
+
+}
+.checkout-btn{
+    background-color: #ff0000;
+}

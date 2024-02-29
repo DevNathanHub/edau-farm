@@ -15,6 +15,7 @@ import Shop from "./Components/Shop/Shop";
 function App() {
 
 	return (
+	 <div className="App">
 		<Router>
 			<Navbar />
 			<Routes>
@@ -25,6 +26,7 @@ function App() {
 				</Routes>
 			
 		</Router>
+	</div>
 		
 	);
 }

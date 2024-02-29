@@ -4,7 +4,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #333;
   color: #fff;
 }
 
@@ -39,9 +38,7 @@
 }
 
 .navbar .user-info {
-  display: flex;
-  flex-direction: column;
-  min-width: 200px;
+  margin-left: 40px;
 }
 
 .navbar .overlay {
@@ -64,12 +61,8 @@
 }
 .auth{
   display: flex;
-  border-radius: 35px;
   justify-content: space-evenly;
-  background-color: blue;
-  padding: 10px;
-  margin-left: 200px;
-  min-width: 200px;
+  gap: 20px;
 }
 .user{
   display: flex;
@@ -101,6 +94,9 @@
   height: 20px;
   width: 20px;
   color: blue;
+}
+.cart-section{
+  margin-left: 40px;
 }
 /* Media Query for Screens Smaller Than 768px */
 @media (max-width: 768px) {

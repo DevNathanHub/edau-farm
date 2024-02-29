@@ -3,6 +3,7 @@ import './banner.css'
 import bannerImg from '../../assets/honey-acacia.png';
 import { Button } from '@chakra-ui/react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
     return (
@@ -16,7 +17,7 @@ const Hero = () => {
                     <p>Find everything you need for your everyday life enriched with the goodness of Acacia flowers</p>
 
                     <Button rightIcon={<ArrowForwardIcon/>} colorScheme='teal' variant='outline'>
-                        Shop Now
+                        <Link to='/shop'> Shop Now </Link>
                     </Button>
                 </div>
 
