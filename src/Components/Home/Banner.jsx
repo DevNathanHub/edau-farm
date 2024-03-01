@@ -15,7 +15,7 @@ const Hero = () => {
                     <p>Explore our wide range of high-quality honey</p>
                     <h1>Discover Edau Honey Products</h1>
                     <p>Find everything you need for your everyday life enriched with the goodness of Acacia flowers</p>
-
+                    <div>updated single product view and checkout component</div>
                     <Button rightIcon={<ArrowForwardIcon/>} colorScheme='teal' variant='outline'>
                         <Link to='/shop'> Shop Now </Link>
                     </Button>
