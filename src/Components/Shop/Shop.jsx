@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Card, CardBody, CardFooter, ButtonGroup, Button, Stack, Heading, Text, Image, Input, InputGroup, InputRightAddon } from '@chakra-ui/react';
 import { Pagination, Spin } from 'antd';
 import axios from 'axios';
 import { CartContext } from '../../Context/CartContext';
-import Filter from './Filter'; // Assuming you have a Filter component
+import Filter from './Filter';
 import { Search2Icon } from '@chakra-ui/icons';
 import './shop.css';
-import { toast } from 'react-toastify';
+//import { toast } from 'react-toastify';
 
 function Shop() {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(4);
@@ -20,7 +22,7 @@ function Shop() {
     minPrice: 0,
     maxPrice: 1000,
   });
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, handlePurchaseItem } = useContext(CartContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -34,7 +36,14 @@ function Shop() {
     };
 
     fetchProducts();
-  }, []);
+  }, [isLoading]);
+
+  useEffect(() => {
+    const state = location.state;
+    if (state && state.currentPage) {
+      setCurrentPage(state.currentPage);
+    }
+  }, [location.state]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -54,15 +63,23 @@ function Shop() {
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
+    navigate('.', { state: { currentPage: pageNumber } }); // Update browser history state
   };
 
   const handleApplyFilter = (filterOptions) => {
     setFilters(filterOptions);
   };
 
-  const handlePurchase = () => {
-    toast.warning('Funtionality not Implemented');
-  }
+  const handleViewProduct = (product) => {
+    handlePurchaseItem(product);
+    navigate(`/shop/product/${product.id}`);
+  };
+
+  const handleAddSingleItem = (product) =>{
+    handlePurchaseItem(product);
+    navigate('/shop/checkout');
+  };
+
   return (
     <div className='shop-component'>
       <div className="filter-search-component">
@@ -86,7 +103,6 @@ function Shop() {
           {currentProducts.map((product, index) => (
             <Card key={index} width={{ sm: '250px' }} borderRadius={'20px'}>
               <CardBody>
-                <Link to={`/product/${product.id}`}>
                   <Image
                     src={product.image}
                     alt={product.title}
@@ -94,9 +110,9 @@ function Shop() {
                     maxH='150px'
                     objectFit='contain'
                     width={'100%'}
+                    onClick={() => handleViewProduct(product)}
                   />
-                </Link>
-                <Stack mt='6' spacing='3'>
+                <Stack mt='6' spacing='3'  onClick={() => handleViewProduct(product)}>
                   <Heading size='sm'>{product.title}</Heading>
                   <Text className='description'>{product.description}</Text>
                   <Text color='blue.600' fontSize='2xl'>${product.price}</Text>
@@ -104,7 +120,7 @@ function Shop() {
               </CardBody>
               <CardFooter>
                 <ButtonGroup spacing='2'>
-                  <Button variant='solid' colorScheme='blue' onClick={handlePurchase}>Buy now</Button>
+                  <Button variant='solid' colorScheme='blue'  onClick={() => handleAddSingleItem(product)}>Buy now</Button>
                   <Button variant='ghost' colorScheme='blue' onClick={() => addToCart(product)}>Add to cart</Button>
                 </ButtonGroup>
               </CardFooter>

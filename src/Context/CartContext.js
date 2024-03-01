@@ -6,6 +6,7 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [singleItem, setSingleItem] = useState(null);
 
   useEffect(() => {
     // Fetch cart items when component mounts
@@ -14,7 +15,12 @@ export const CartProvider = ({ children }) => {
   
   useEffect(() => {
     calculateTotalPrice();
-  }, [cartItems]);
+  });
+
+  const handlePurchaseItem = (product) =>{
+    setSingleItem(product);
+    toast.success("context saved");
+  };
 
   const fetchCart = () => {
     const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
@@ -31,7 +37,8 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (cartItemId) => {
-    const updatedCartItems = cartItems.filter(item => item.id !== cartItemId);
+    
+  const updatedCartItems = cartItems.filter(item => item.id !== cartItemId);
     setCartItems(updatedCartItems);
     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     toast.error('Removed from cart');
@@ -55,8 +62,20 @@ export const CartProvider = ({ children }) => {
   };
 
   return (  
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateCartItemQuantity, setCartItems, totalPrice }}>
+    <CartContext.Provider value={{ 
+      singleItem,
+      setSingleItem,
+      handlePurchaseItem,
+      cartItems,
+      addToCart,
+      removeFromCart, 
+      updateCartItemQuantity, 
+      setCartItems, 
+      totalPrice 
+    }}>
+
       {children}
+
     </CartContext.Provider>
   );
 };

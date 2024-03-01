@@ -1,10 +1,10 @@
-  import React, { useState, useEffect, useContext } from 'react';
+  import React, { useState, useContext } from 'react';
   import Offcanvas from 'react-bootstrap/Offcanvas';
   import { PiShoppingCartLight } from "react-icons/pi";
   import { CartContext } from '../../Context/CartContext';
   import './cart.css';
   import { Badge } from 'react-bootstrap';
-  import { Button, Card, CardBody, CardFooter, Heading, Image, Input, Stack, Text } from '@chakra-ui/react';
+  import { Button, Card, CardBody,  Image, Stack, Text } from '@chakra-ui/react';
   import { MdDeleteSweep } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
   function Cart() {

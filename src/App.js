@@ -8,9 +8,11 @@ import {
 	Routes,
 	Route,
 } from "react-router-dom";
-import PageNotFound from "./PageNotFound";
+import PageNotFound from "./NotFound/PageNotFound";
 import Home from "./Components/Home/Home";
 import Shop from "./Components/Shop/Shop";
+import Product from "./Components/Shop/Product";
+import Checkout from "./Components/Shop/Checkout";
 
 function App() {
 
@@ -21,7 +23,8 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/shop" element={<Shop/>} />
-
+				<Route path="/shop/product/:id" element={<Product/>}/>
+				<Route path="/shop/checkout" element={<Checkout/>}/>
 				<Route path="*" element={<PageNotFound/>} />
 				</Routes>
 			

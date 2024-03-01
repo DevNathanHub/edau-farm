@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 import { CiLogin } from "react-icons/ci";
 import { IoCreateOutline } from "react-icons/io5";
@@ -11,7 +11,7 @@ import { Button, Stack } from "@chakra-ui/react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user] = useState(null);
 
  
 

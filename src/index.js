@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react' 
 import { CartProvider } from './Context/CartContext';
+import { DeliveryAddressProvider } from './Context/deliveryAddressContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,7 +14,9 @@ root.render(
   <React.StrictMode>
     <ChakraProvider>
       <CartProvider>
-        <App />
+        <DeliveryAddressProvider>
+         <App />
+        </DeliveryAddressProvider>
       </CartProvider>
     </ChakraProvider>
     <ToastContainer/>

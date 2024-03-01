@@ -25,3 +25,9 @@
 .checkout-btn{
     background-color: #ff0000;
 }
+@media (max-width: 768px) {
+ .remove-cart-item{
+    position: absolute;
+    
+ }
+}
