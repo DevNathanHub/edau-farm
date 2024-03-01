@@ -29,7 +29,7 @@ function Shop() {
       try {
         const response = await axios.get('https://fakestoreapi.com/products');
         setProducts(response.data);
-        setIsLoading(!isLoading);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
