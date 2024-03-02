@@ -15,12 +15,15 @@ export const CartProvider = ({ children }) => {
   
   useEffect(() => {
     calculateTotalPrice();
-  });
+  }, [cartItems]); // Add cartItems as a dependency
 
-  const handlePurchaseItem = (product) =>{
+  const handlePurchaseItem = (product) => {
     setSingleItem(product);
     toast.success("context saved");
+    // Add the product with default quantity to cart
+    addToCart({ ...product, quantity: 1 });
   };
+  
 
   const fetchCart = () => {
     const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
@@ -30,15 +33,28 @@ export const CartProvider = ({ children }) => {
   };
 
   const addToCart = (product) => {
-    const updatedCartItems = [...cartItems, product];
-    setCartItems(updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    // Check if the product already exists in the cart
+    const existingProductIndex = cartItems.findIndex((item) => item.id === product.id);
+    
+    if (existingProductIndex !== -1) {
+      // If product exists, increment its quantity
+      const updatedCartItems = [...cartItems];
+      updatedCartItems[existingProductIndex].quantity += 1;
+      setCartItems(updatedCartItems);
+      localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    } else {
+      // If product does not exist, add it with a quantity of 1
+      const updatedCartItems = [...cartItems, { ...product, quantity: 1 }];
+      setCartItems(updatedCartItems);
+      localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    }
     toast.success('Added to cart');
   };
+  
+  
 
   const removeFromCart = (cartItemId) => {
-    
-  const updatedCartItems = cartItems.filter(item => item.id !== cartItemId);
+    const updatedCartItems = cartItems.filter(item => item.id !== cartItemId);
     setCartItems(updatedCartItems);
     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     toast.error('Removed from cart');
@@ -55,11 +71,55 @@ export const CartProvider = ({ children }) => {
     setCartItems(updatedCartItems);
     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
   };
-  
-  const calculateTotalPrice = () => {
-    const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-    setTotalPrice(totalPrice);
+
+  const handleIncrementQuantity = (cartItemId) => {
+    // Increment the quantity of the item with the specified ID
+    const updatedCartItems = cartItems.map(item => {
+      if (item.id === cartItemId) {
+        return { ...item, quantity: item.quantity + 1 };
+      }
+      return item;
+    });
+    setCartItems(updatedCartItems);
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
   };
+
+  const handleDecrementQuantity = (cartItemId) => {
+    // Decrement the quantity of the item with the specified ID
+    const updatedCartItems = cartItems.map(item => {
+      if (item.id === cartItemId && item.quantity > 1) {
+        return { ...item, quantity: item.quantity - 1 };
+      }
+      return item;
+    });
+    setCartItems(updatedCartItems);
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+  };
+
+  
+  // Inside your CartProvider component
+const calculateTotalPrice = () => {
+  try {
+    const totalPrice = cartItems.reduce((total, item) => {
+      // Ensure item.price and item.quantity are valid numbers before multiplying
+      const price = typeof item.price === 'number' ? item.price : 0;
+      const quantity = typeof item.quantity === 'number' ? item.quantity : 0;
+      return total + (price * quantity);
+    }, 0);
+
+    // Format totalPrice to two decimal places
+    const formattedTotalPrice = parseFloat(totalPrice).toFixed(2);
+
+    // Update state with formatted totalPrice
+    setTotalPrice(formattedTotalPrice);
+  } catch (error) {
+    // Handle any errors gracefully
+    console.error('Error calculating total price:', error);
+    setTotalPrice(0); // Set totalPrice to 0 if calculation fails
+  }
+};
+
+  
 
   return (  
     <CartContext.Provider value={{ 
@@ -69,7 +129,9 @@ export const CartProvider = ({ children }) => {
       cartItems,
       addToCart,
       removeFromCart, 
-      updateCartItemQuantity, 
+      updateCartItemQuantity,
+      handleIncrementQuantity,
+      handleDecrementQuantity, 
       setCartItems, 
       totalPrice 
     }}>

@@ -19,7 +19,16 @@ root.render(
         </DeliveryAddressProvider>
       </CartProvider>
     </ChakraProvider>
-    <ToastContainer/>
+    <ToastContainer 
+           position="top-center"
+           autoClose={3000}
+           closeOnClick
+           rtl={false}
+           pauseOnFocusLoss
+           draggable
+           pauseOnHover
+           toastContainerStyle={{ top: '50%', transform: 'translateY(-50%)' }}
+        />
   </React.StrictMode>
 );
 

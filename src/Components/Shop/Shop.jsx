@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Card, CardBody, CardFooter, ButtonGroup, Button, Stack, Heading, Text, Image, Input, InputGroup, InputRightAddon } from '@chakra-ui/react';
+import { Card, CardBody, CardFooter, ButtonGroup, Button, Stack, Heading, Text, Image, Input, InputGroup, InputRightAddon, InputRightElement } from '@chakra-ui/react';
 import { Pagination, Spin } from 'antd';
 import axios from 'axios';
 import { CartContext } from '../../Context/CartContext';
 import Filter from './Filter';
 import { Search2Icon } from '@chakra-ui/icons';
+import { BiPurchaseTag, BiSolidCartAdd } from "react-icons/bi";
 import './shop.css';
-//import { toast } from 'react-toastify';
+import { Badge } from 'react-bootstrap';
 
 function Shop() {
   const [products, setProducts] = useState([]);
@@ -22,7 +23,7 @@ function Shop() {
     minPrice: 0,
     maxPrice: 1000,
   });
-  const { addToCart, handlePurchaseItem } = useContext(CartContext);
+  const { addToCart, handlePurchaseItem, cartItems } = useContext(CartContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -36,7 +37,7 @@ function Shop() {
     };
 
     fetchProducts();
-  }, [isLoading]);
+  }, []);
 
   useEffect(() => {
     const state = location.state;
@@ -85,11 +86,16 @@ function Shop() {
       <div className="filter-search-component">
         <Filter onApplyFilter={handleApplyFilter} />
         <div className="search-component">
-          <InputGroup >
-          <Input placeholder="Search..."  style={{borderTopLeftRadius: '30px', borderBottomLeftRadius: '30px'}} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-          <InputRightAddon style={{borderTopRightRadius: '30px', borderBottomRightRadius: '30px'}} backgroundColor= 'white'>
-            <Search2Icon />
-          </InputRightAddon>
+          
+          <InputGroup>
+            <Input 
+              style={{ borderRadius: '30px', border: '1px solid #ddd'}}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)} placeholder='Search' 
+            />
+            <InputRightElement pointerEvents='none'>
+              <Search2Icon color='black.300' />
+            </InputRightElement>
           </InputGroup>
         </div>
         
@@ -100,32 +106,37 @@ function Shop() {
         </div>
       : 
         <div className='shop-content'>
-          {currentProducts.map((product, index) => (
-            <Card key={index} width={{ sm: '250px' }} borderRadius={'20px'}>
-              <CardBody>
-                  <Image
-                    src={product.image}
-                    alt={product.title}
-                    borderRadius='sm'
-                    maxH='150px'
-                    objectFit='contain'
-                    width={'100%'}
-                    onClick={() => handleViewProduct(product)}
-                  />
-                <Stack mt='6' spacing='3'  onClick={() => handleViewProduct(product)}>
-                  <Heading size='sm'>{product.title}</Heading>
-                  <Text className='description'>{product.description}</Text>
-                  <Text color='blue.600' fontSize='2xl'>${product.price}</Text>
-                </Stack>
-              </CardBody>
-              <CardFooter>
-                <ButtonGroup spacing='2'>
-                  <Button variant='solid' colorScheme='blue'  onClick={() => handleAddSingleItem(product)}>Buy now</Button>
-                  <Button variant='ghost' colorScheme='blue' onClick={() => addToCart(product)}>Add to cart</Button>
-                </ButtonGroup>
-              </CardFooter>
-            </Card>
-          ))}
+          {currentProducts.map((product, index) => {
+            // Find the corresponding item in the cart
+            const cartItem = cartItems.find((item) => item.id === product.id);
+            // Get the quantity from the cartItem or default to 0 if not found
+            const quantity = cartItem ? cartItem.quantity : 0;
+            return (
+              <Card key={index} width={{ sm: '280px' }} borderRadius={'20px'}>
+                <CardBody>
+                    <Image
+                      src={product.image}
+                      alt={product.title}
+                      borderRadius='sm'
+                      maxH='150px'
+                      objectFit='contain'
+                      width={'100%'}
+                      onClick={() => handleViewProduct(product)}
+                    />
+                  <Stack mt='6' spacing='3'  onClick={() => handleViewProduct(product)}>
+                    <Heading size='sm'>{product.title}</Heading>
+                    <Text className='description'>{product.description}</Text>
+                    <Text color='blue.600' fontSize='2xl'>${product.price}</Text>
+                  </Stack>
+                </CardBody>
+                <CardFooter className='footer'>
+                    <Button variant='solid' colorScheme='green' size='sm' className ='footer-btn' rightIcon={<BiPurchaseTag/>} onClick={() => handleAddSingleItem(product)}>Buy Now</Button>
+                    <Button variant='outline' colorScheme='green' size='sm' className = 'footer-btn' onClick={() => addToCart(product)}>Add to Cart {quantity > 0 && <Badge style= {{marginLeft: '5px'}} bg='success' pill >{quantity}</Badge>}               
+                    </Button>
+                </CardFooter>
+              </Card>
+            );
+          })}
         </div>
       }
       <div className='pagination'>

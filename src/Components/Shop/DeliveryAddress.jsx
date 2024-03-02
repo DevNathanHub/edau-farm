@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useDeliveryAddress } from '../../Context/deliveryAddressContext';
 import { Card, CardBody, CardFooter, Button, Heading, Text, Input, InputGroup, Stack } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 function DeliveryAddress() {
     const { deliveryAddress, updateDeliveryAddress } = useDeliveryAddress();
+    const navigate = useNavigate();
     const [address, setAddress] = useState({
         firstName: '',
         lastName: '',
@@ -25,9 +27,12 @@ function DeliveryAddress() {
     const toggleEditMode = () => {
         setEditMode(!editMode);
         if (!editMode) {
-            // Populate form with current delivery address when entering edit mode
-            setAddress(deliveryAddress);
-        }
+            if(deliveryAddress){
+                 setAddress(deliveryAddress);
+            } else {
+                 navigate('/shop');
+            }
+        } 
     };
 
     return (
