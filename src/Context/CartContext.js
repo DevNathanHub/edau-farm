@@ -19,9 +19,7 @@ export const CartProvider = ({ children }) => {
 
   const handlePurchaseItem = (product) => {
     setSingleItem(product);
-    toast.success("context saved");
-    // Add the product with default quantity to cart
-    addToCart({ ...product, quantity: 1 });
+   
   };
   
 

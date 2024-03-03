@@ -39,6 +39,9 @@
 
 .navbar .user-info {
   margin-left: 40px;
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .navbar .overlay {
@@ -133,4 +136,20 @@
   .user, .auth{
     margin-left: 20px;
   }
+}
+
+
+
+
+.menu-btn{
+  border-radius: 30px;
+  background-color: transparent;
+  border: 1px solid rgba(89, 89, 245, 0.377);
+}
+.profile-menu{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+
 }

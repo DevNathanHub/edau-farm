@@ -27,7 +27,7 @@
         align-items: center;
         justify-content: center;
     }
-
+    
     .description{
         display: none;
     }
@@ -43,4 +43,10 @@
     }
     .footer-btn{
         width: 48%;
+    }
+    @media (max-width: 768px) {
+
+        .shop-card{
+         width: 80%;         
+        }
     }

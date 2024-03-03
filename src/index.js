@@ -8,16 +8,19 @@ import { CartProvider } from './Context/CartContext';
 import { DeliveryAddressProvider } from './Context/deliveryAddressContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { UserProvider } from './Context/userContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ChakraProvider>
-      <CartProvider>
-        <DeliveryAddressProvider>
-         <App />
-        </DeliveryAddressProvider>
-      </CartProvider>
+      <UserProvider>
+        <CartProvider>
+          <DeliveryAddressProvider>
+            <App />
+          </DeliveryAddressProvider>
+        </CartProvider>
+      </UserProvider>
     </ChakraProvider>
     <ToastContainer 
            position="top-center"

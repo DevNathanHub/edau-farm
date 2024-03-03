@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Card, CardBody, CardFooter, ButtonGroup, Button, Stack, Heading, Text, Image, Input, InputGroup, InputRightAddon, InputRightElement } from '@chakra-ui/react';
+import { Card, CardBody, CardFooter, Button, Stack, Heading, Text, Image, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { CiDeliveryTruck } from "react-icons/ci";
 import { Pagination, Spin } from 'antd';
 import axios from 'axios';
 import { CartContext } from '../../Context/CartContext';
 import Filter from './Filter';
 import { Search2Icon } from '@chakra-ui/icons';
-import { BiPurchaseTag, BiSolidCartAdd } from "react-icons/bi";
+import { BiPurchaseTag } from "react-icons/bi";
 import './shop.css';
 import { Badge } from 'react-bootstrap';
 
@@ -112,8 +113,8 @@ function Shop() {
             // Get the quantity from the cartItem or default to 0 if not found
             const quantity = cartItem ? cartItem.quantity : 0;
             return (
-              <Card key={index} width={{ sm: '280px' }} borderRadius={'20px'}>
-                <CardBody>
+              <Card key={index} width={{ sm: '280px' }} borderRadius={'20px'} className='shop-card'>
+                <CardBody cursor='pointer'>
                     <Image
                       src={product.image}
                       alt={product.title}
@@ -126,7 +127,8 @@ function Shop() {
                   <Stack mt='6' spacing='3'  onClick={() => handleViewProduct(product)}>
                     <Heading size='sm'>{product.title}</Heading>
                     <Text className='description'>{product.description}</Text>
-                    <Text color='blue.600' fontSize='2xl'>${product.price}</Text>
+                      <Text fontSize='2xl' color= 'blue.800'>${product.price}   </Text>                
+                      <Stack direction='horizontal' gap={2}><Badge bg='light' text='dark'pill >In Stock</Badge><Badge pill style={{display: 'flex', gap: '2px'}}><CiDeliveryTruck/> Free Delivery</Badge></Stack>
                   </Stack>
                 </CardBody>
                 <CardFooter className='footer'>
