@@ -16,6 +16,9 @@ import Checkout from "./Components/Shop/Checkout";
 import Login from "./Auth/Login/Login";
 import Signup from "./Auth/Signup/Signup";
 import Dashboard from "./Admin/Dashboard/Dashboard";
+import Contact from "./Components/Contact/Contact";
+import FAQ from "./Components/FAQ/FAQ";
+import AboutUs from "./Components/AboutUs/AboutUs";
 
 function App() {
 
@@ -31,6 +34,10 @@ function App() {
 				<Route path="/edau-farm-admin" element={<Dashboard/>} />
 				<Route path="/shop/product/:id" element={<Product/>}/>
 				<Route path="/shop/checkout" element={<Checkout/>}/>
+				<Route path="/contact" element={<Contact/>} /> 
+				<Route path="/faq" element={<FAQ/>} /> 
+				<Route path="/about" element={<AboutUs/>} /> 
+
 				<Route path="*" element={<PageNotFound/>} />
 				</Routes>
 			

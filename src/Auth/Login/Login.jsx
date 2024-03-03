@@ -75,7 +75,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container component">
       <TransitionGroup>
         <CSSTransition classNames="fade" timeout={300}>
           <div className='form-container'>

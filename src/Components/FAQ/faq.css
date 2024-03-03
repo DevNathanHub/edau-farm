@@ -1,0 +1,17 @@
+.faq-component{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+   
+
+}
+.faqs-section{
+   width: 98%;
+}
+@media screen and (max-width: 940px) {
+    .faqs-section{
+        width: 95%;
+   }
+}

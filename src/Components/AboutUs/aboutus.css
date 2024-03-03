@@ -1,0 +1,14 @@
+.about-component{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+.about-section{
+    width: 90%;
+}
+@media screen and (max-width: 940px) {
+    .about-section{
+        width: 95%;
+   }
+}

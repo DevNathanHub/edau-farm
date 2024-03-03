@@ -10,6 +10,7 @@ import { Search2Icon } from '@chakra-ui/icons';
 import { BiPurchaseTag } from "react-icons/bi";
 import './shop.css';
 import { Badge } from 'react-bootstrap';
+import ContentNotFound from '../../NotFound/ContentNotFound';
 
 function Shop() {
   const [products, setProducts] = useState([]);
@@ -62,6 +63,8 @@ function Shop() {
       );
     });
   const currentProducts = filteredProducts && filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
+  
+   
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -83,7 +86,7 @@ function Shop() {
   };
 
   return (
-    <div className='shop-component'>
+    <div className='shop-component component'>
       <div className="filter-search-component">
         <Filter onApplyFilter={handleApplyFilter} />
         <div className="search-component">
@@ -107,7 +110,9 @@ function Shop() {
         </div>
       : 
         <div className='shop-content'>
-          {currentProducts.map((product, index) => {
+          {currentProducts.length === 0 ? <ContentNotFound/>
+          : 
+            currentProducts.map((product, index) => {
             // Find the corresponding item in the cart
             const cartItem = cartItems.find((item) => item.id === product.id);
             // Get the quantity from the cartItem or default to 0 if not found

@@ -6,10 +6,10 @@ function ContentNotFound() {
   return (
     <div>
         <Result
-            title="No Product Selected Please Get Back to Products and Click Buy Now on your favourite Product"
+            title="Product Not Available"
             extra={
             <Button >
-                <Link to='/shop'>View Products</Link>
+                <Link to='/contact'>Send Request</Link>
             </Button>
             }
         />
