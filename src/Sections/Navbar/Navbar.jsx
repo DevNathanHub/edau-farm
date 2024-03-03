@@ -3,7 +3,7 @@
   import { CiLogin, CiUser } from "react-icons/ci";
   import { LuBaggageClaim } from "react-icons/lu";
   import { IoCreateOutline } from "react-icons/io5";
-  import { FcLike } from "react-icons/fc";
+  import { TbJewishStarFilled } from "react-icons/tb";
   import { Link, useNavigate } from "react-router-dom";
   import classNames from "classnames";
   import "./Navbar.css";
@@ -106,7 +106,7 @@
                   <MenuList color='blue'>
                     <MenuItem ><Link to='/account' style={{display: 'flex', gap: '5px', alignItems: 'center'}} className="menu-item"><CiUser/> Account</Link></MenuItem>
                     <MenuItem ><Link to='/orders' style={{display: 'flex', gap: '5px', alignItems: 'center'}} className="menu-item"><LuBaggageClaim/> Orders</Link></MenuItem>
-                    <MenuItem ><Link to='/favorites' style={{display: 'flex', gap: '5px', alignItems: 'center'}} className="menu-item"><FcLike/> Favorites</Link></MenuItem>
+                    <MenuItem ><Link to='/favorites' style={{display: 'flex', gap: '5px', alignItems: 'center'}} className="menu-item"><TbJewishStarFilled/> Favorites</Link></MenuItem>
                     <MenuItem style={{color: 'red'}} onClick={logout}>Logout</MenuItem>
                   </MenuList>
                 </Menu>
