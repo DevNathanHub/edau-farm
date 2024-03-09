@@ -72,7 +72,7 @@ const Signup = () => {
         }
       } catch (error) {
         if (error.code === 'auth/email-already-in-use') {
-          // If the email is already in use with a different credential, navigate to the login page
+          await toast.info('User Exist, try to Login Instead');
           navigate('/auth/login');
           return;
         }
@@ -113,6 +113,7 @@ const Signup = () => {
         saveUser(newUser);
         navigate('/shop');
       } else if(response.data.existingUser){
+        await toast.info('User Exist, Login Instead');
         navigate('/auth/login');
         return;
 

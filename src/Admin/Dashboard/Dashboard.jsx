@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react';
+import { Button, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react'; // Import useEffect for socket connection
 import io from 'socket.io-client'; // Import io from socket.io-client
 
@@ -27,6 +27,31 @@ function Dashboard() {
   return (
     <div className='component'>
       Dashboard {newUser ? <><Button>View Users</Button></> : null}
+      <Tabs>
+      <TabList>
+        <Tab>Products</Tab>
+        <Tab>Users</Tab>
+        <Tab>Updates</Tab>
+        <Tab>Settings</Tab>
+
+      </TabList>
+
+      <TabPanels>
+        <TabPanel>
+          <p>Products</p>
+        </TabPanel>
+        <TabPanel>
+          <p>Users</p>
+        </TabPanel>
+        <TabPanel>
+          <p>Updates</p>
+        </TabPanel>
+        <TabPanel>
+          <p>Settings</p>
+        </TabPanel>
+
+      </TabPanels>
+    </Tabs>
     </div>
   );
 }
