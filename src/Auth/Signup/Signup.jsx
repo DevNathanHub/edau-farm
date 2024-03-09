@@ -7,13 +7,15 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase'; // Corrected import statement
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'; // Import Google auth methods
 import { useUser } from '../../Context/userContext';
-import { Input, Button, InputGroup, InputRightElement } from '@chakra-ui/react'; // Import Chakra UI components
+import { Input, Button, InputGroup, InputRightElement, Box, Divider, AbsoluteCenter } from '@chakra-ui/react'; // Import Chakra UI components
 import { EmailIcon } from '@chakra-ui/icons';
 import { Badge, Spinner } from 'react-bootstrap';
 import { IoCreateOutline } from "react-icons/io5";
 import './Signup.css';
 import { FcGoogle } from 'react-icons/fc';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from 'axios';
+import { baseUrl } from '../../baseUrl';
 
 const Signup = () => {
   const { saveUser } = useUser();
@@ -39,7 +41,7 @@ const Signup = () => {
     },
     validationSchema: Yup.object({
       email: Yup.string().email('Invalid email address').required('Email is required'),
-      password: Yup.string().required('Password is required'),
+      password: Yup.string().min(6, 'Minimum of 6 characters').required('Password is required'),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Passwords must match')
         .required('Confirm password is required'),
@@ -48,10 +50,32 @@ const Signup = () => {
       try {
         setSignupLoading(true);
         const { user } = await createUserWithEmailAndPassword(auth, values.email, values.password);
-        saveUser(user);
-        toast.success('Signup successful!');
-        navigate('/shop');
+       
+        const submitData = {
+          email: user.email,
+          displayName: user.displayName,
+          uid: user.uid,
+          photoURL: user.photoURL,
+        }
+        const response = await axios.post(`${baseUrl}/api/signup`, submitData);
+        
+        if(response.data.newUser){
+          const newUser = response.data.newUser;
+          console.log("user from server", newUser);
+          saveUser(newUser);
+          navigate('/shop');
+        } else if(response.data.existingUser){
+          toast.info("User exist please login");
+          navigate('/auth/login');
+          return;
+  
+        }
       } catch (error) {
+        if (error.code === 'auth/email-already-in-use') {
+          // If the email is already in use with a different credential, navigate to the login page
+          navigate('/auth/login');
+          return;
+        }
         console.error('Error submitting form:', error);
         toast.error('Error submitting form. Please try again.');
       } finally {
@@ -74,18 +98,44 @@ const Signup = () => {
     try {
       setGoogleLoading(true);
       const { user } = await signInWithPopup(auth, provider);
-      saveUser(user);
-      navigate('/shop');
+
+      const submitData = {
+        email: user.email,
+        displayName: user.displayName,
+        uid: user.uid,
+        photoURL: user.photoURL,
+      }
+      const response = await axios.post(`${baseUrl}/api/signup`, submitData);
+      
+      if(response.data.newUser){
+        const newUser = response.data.newUser;
+        console.log("user from server", newUser);
+        saveUser(newUser);
+        navigate('/shop');
+      } else if(response.data.existingUser){
+        navigate('/auth/login');
+        return;
+
+      }
+      
     } catch (error) {
+      if (error.code === 'auth/account-exists-with-different-credential') {
+        // If the email is already in use with a different credential, navigate to the login page
+        navigate('/auth/login');
+        return;
+      }
       console.error('Google Sign-in Error:', error);
       toast.error('Error signing in with Google. Please try again.');
     } finally {
       setGoogleLoading(false);
     }
   };
+  const handleLoginNav = () => {
+    navigate('/auth/login');
+  }
 
   return (
-    <div className="signup-container component">
+    <div className="signup-container component" >
       <TransitionGroup>
         <CSSTransition classNames="fade" timeout={300}>
           <div className='form-container'>
@@ -107,7 +157,7 @@ const Signup = () => {
                     <EmailIcon/>
                   </InputRightElement>
                 </InputGroup>
-                {formik.touched.email && formik.errors.email && <Badge className="error" bg='danger' pill>{formik.errors.email}</Badge>}
+                {formik.touched.email && formik.errors.email && <Badge className="error" bg='transparent' pill >{formik.errors.email}!</Badge>}
               </div>
 
               <div className='form-group'>
@@ -129,7 +179,7 @@ const Signup = () => {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
-                {formik.touched.password && formik.errors.password && <Badge className="error" bg='danger' pill>{formik.errors.password}</Badge>}
+                {formik.touched.password && formik.errors.password && <Badge className="error" bg='transparent' pill>{formik.errors.password}!</Badge>}
               </div>
 
               <div className='form-group'>
@@ -151,7 +201,7 @@ const Signup = () => {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
-                {formik.touched.confirmPassword && formik.errors.confirmPassword && <Badge className="error" bg='danger' pill>{formik.errors.confirmPassword}</Badge>}
+                {formik.touched.confirmPassword && formik.errors.confirmPassword && <Badge className="error" bg='transparent' pill>{formik.errors.confirmPassword}!</Badge>}
               </div>
 
               <div className="form-group">
@@ -179,6 +229,22 @@ const Signup = () => {
                   Continue with Google
                 </Button>
               </div>
+              <Box position='relative'>
+              <Divider/>
+              <AbsoluteCenter px='2'>
+                OR
+              </AbsoluteCenter>
+            </Box>
+            <div className='form-group'>
+              <Button 
+                variant='outline' 
+                colorScheme='blue' 
+                onClick={handleLoginNav} 
+                borderRadius='30px'
+              >
+                Login
+              </Button>
+            </div>
             </form>
           </div>
         </CSSTransition>

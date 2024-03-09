@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Button, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { Input, Button, InputGroup, InputRightElement, Divider, Box, AbsoluteCenter } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import { useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useUser } from '../../Context/userContext';
@@ -11,6 +11,8 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { CiLogin } from "react-icons/ci";
 import { EmailIcon } from '@chakra-ui/icons';
+import { baseUrl } from '../../baseUrl';
+import axios from 'axios';
 
 import './Login.css';
 
@@ -24,6 +26,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const [googleLoading, setGoogleLoading] = useState(false); // State to manage Google sign-in loading
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -42,13 +45,25 @@ const Login = () => {
     setLoading(true);
     try {
       const { user } = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-      saveUser(user);
-      localStorage.setItem('user', JSON.stringify(user));
-      toast.success('Login successful!');
-      navigate('/shop');
+
+      const submitData = {
+        email: user.email,
+        displayName: user.displayName,
+        uid: user.uid,
+        photoURL: user.photoURL,
+      }
+      const response = await axios.post(`${baseUrl}/api/login`, submitData);
+      console.log(response.data);
+      
+      if(response.data.user){
+        const currentUser = response.data.user;
+        console.log("user from server", user);
+        saveUser(currentUser);
+        navigate('/shop');
+      } 
     } catch (error) {
-      console.error('Error submitting form:', error);
-      toast.error('Invalid email or password. Please try again.');
+      console.error('Error Signing In:', error);
+      setError('Invalid email or password. Please try again or Signup Instead');
     } finally {
       setLoading(false);
     }
@@ -59,12 +74,23 @@ const Login = () => {
     const provider = new GoogleAuthProvider();
     try {
       const { user } = await signInWithPopup(auth, provider);
-      saveUser(user);
-      localStorage.setItem('user', JSON.stringify(user));
-      navigate('/shop');
+      const submitData = {
+        email: user.email,
+        displayName: user.displayName,
+        uid: user.uid,
+        photoURL: user.photoURL,
+      }
+      const response = await axios.post(`${baseUrl}/api/login`, submitData);
+      console.log(response.data);
+      if(response.data.user){
+        const currentUser = response.data.user;
+        console.log("user from server", user);
+        saveUser(currentUser);
+        navigate('/shop');
+      } 
     } catch (error) {
-      console.error('Google Sign-in Error:', error);
-      toast.error('Error signing in with Google. Please try again.');
+      console.error('Error Signing In:', error);
+      setError('Error signing in. Please try again');
     } finally {
       setGoogleLoading(false);
     }
@@ -73,7 +99,9 @@ const Login = () => {
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
-
+  const handleSignup = () => {
+    navigate('/auth/signup');
+  }
   return (
     <div className="login-container component">
       <TransitionGroup>
@@ -141,6 +169,29 @@ const Login = () => {
                 >
                   Continue with Google
                 </Button>
+              </div>
+              {error && <div className="error-message">{error} or Signup Instead</div>}
+              
+              
+              <Box position='relative'>
+              <Divider/>
+              <AbsoluteCenter px='2'>
+                OR
+              </AbsoluteCenter>
+            </Box>
+            
+
+
+              <div className="form-group">
+              <Button 
+              variant='outline' 
+              colorScheme='blue'
+              onClick={handleSignup}
+              className="btn-submit"
+              borderRadius='30px'
+              >
+                Signup 
+              </Button> 
               </div>
             </form>
           </div>

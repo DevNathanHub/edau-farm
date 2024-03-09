@@ -10,7 +10,7 @@ const testimonials = [
     rating: 5
   },
   {
-    name: "Jane Smith",
+    name: "David Smith",
     role: "Customer",
     avatar: "https://bit.ly/sage-adebayo",
     content: "I've been a loyal customer of HoneyHarvest for years. Their honey never disappoints and always exceeds my expectations!",
