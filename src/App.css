@@ -1,10 +1,8 @@
 .App{
-    background-color: beige;
     min-height: 100vh;
     height: fit-content;
 }
 .component{
-    background-color: white;
     margin: 10px;
     padding: 20px;
     border-radius: 20px;

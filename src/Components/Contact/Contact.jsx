@@ -34,7 +34,7 @@ function Contact() {
   };
 
   return (
-    <div className='contact-component' style={{backgroundColor: 'white', margin: '10px', padding: '20px', borderRadius: '20px'}}>
+    <div className='contact-component' style={{margin: '10px', padding: '20px', borderRadius: '20px'}}>
       <h1>Contact Us</h1>
       <Formik
         initialValues={initialValues}

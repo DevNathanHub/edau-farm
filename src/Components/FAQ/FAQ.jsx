@@ -16,7 +16,7 @@ function FAQ() {
       <h1>Frequently Asked Questions</h1>
     <div className='faqs-section'>
       
-      <Accordion defaultIndex={[0]} allowMultiple bgColor='white'>
+      <Accordion defaultIndex={[0]} allowMultiple >
         <AccordionItem >
           <AccordionButton >
             <Box flex="1" textAlign="left">

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 //import Button from 'react-bootstrap/Button';
-import Offcanvas from 'react-bootstrap/Offcanvas';
 import { FaFilter } from 'react-icons/fa6';
 import { FcClearFilters } from "react-icons/fc";
 import { toast } from 'react-toastify';
@@ -9,12 +8,12 @@ import axios from 'axios';
 import { Select, Input } from 'antd';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { Button, Card, Text } from '@chakra-ui/react';
+import { Button, Card, Text, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton } from '@chakra-ui/react';
 
 const { Option } = Select;
 
 function Filter({ onApplyFilter }) {
-  const [show, setShow] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000); // Set a default max value
   const [category, setCategory] = useState('');
@@ -37,7 +36,7 @@ function Filter({ onApplyFilter }) {
     toast(`Category: ${category}, Price Range: $${minPrice} - $${maxPrice}`);
     onApplyFilter({ category, minPrice, maxPrice });
     console.log(category, minPrice, maxPrice);
-    handleClose();
+    closeDrawer();
   };
 
   const handleClearFilter = () => {
@@ -55,78 +54,87 @@ function Filter({ onApplyFilter }) {
     </Card>
   );
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const openDrawer = () => setIsDrawerOpen(true);
+  const closeDrawer = () => setIsDrawerOpen(false);
 
   return (
     <>
-      <div onClick={handleShow} className="filter-component">
+      <div onClick={openDrawer} className="filter-component">
         Filter <FaFilter className="filter-icon" />
       </div>
 
-      <Offcanvas show={show} onHide={handleClose} style={{ maxWidth: '350px' }}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Filter Options</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <div className="filter-category">
-            <h5>Category</h5>
-            <Select
-              value={category}
-              onChange={(value) => setCategory(value)}
-              style={{ width: '100%' }}
-              placeholder="Select Category"
-            >
-              {categories.map((cat) => (
-                <Option key={cat} value={cat}>
-                  {cat}
-                </Option>
-              ))}
-            </Select>
-          </div>
+      <Drawer
+        isOpen={isDrawerOpen}
+        onClose={closeDrawer}
+        placement="right"
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Filter Options</DrawerHeader>
 
-          <div className="filter-price">
-            <h5>Price Range</h5>
-            <Slider
-              min={0}
-              max={1000}
-              allowCross={false}
-              defaultValue={[minPrice, maxPrice]}
-              onChange={(value) => {
-                setMinPrice(value[0]);
-                setMaxPrice(value[1]);
-              }}
-              range
-            />
-
-            <div className="price-inputs">
-              <label>Min Price:</label>
-              <Input
-                type="number"
-                value={minPrice}
-                onChange={(e) => setMinPrice(parseInt(e.target.value) || 0)}
-              />
+          <DrawerBody>
+            <div className="filter-category">
+              <h5>Category</h5>
+              <Select
+                value={category}
+                onChange={(value) => setCategory(value)}
+                style={{ width: '100%' }}
+                placeholder="Select Category"
+              >
+                {categories.map((cat) => (
+                  <Option key={cat} value={cat}>
+                    {cat}
+                  </Option>
+                ))}
+              </Select>
             </div>
-            <div className="price-inputs">
-              <label>Max Price:</label>
-              <Input
-                type="number"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(parseInt(e.target.value) || 0)}
+
+            <div className="filter-price">
+              <h5>Price Range</h5>
+              <Slider
+                min={0}
+                max={1000}
+                allowCross={false}
+                defaultValue={[minPrice, maxPrice]}
+                onChange={(value) => {
+                  setMinPrice(value[0]);
+                  setMaxPrice(value[1]);
+                }}
+                range
               />
+
+              <div className="price-inputs">
+                <label>Min Price:</label>
+                <Input
+                  type="number"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(parseInt(e.target.value) || 0)}
+                />
+              </div>
+              <div className="price-inputs">
+                <label>Max Price:</label>
+                <Input
+                  type="number"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(parseInt(e.target.value) || 0)}
+                />
+              </div>
             </div>
-          </div>
 
-          <PreviewComponent />
+            <PreviewComponent />
+          </DrawerBody>
 
-          <Button leftIcon={<FaFilter />} colorScheme='teal' variant='solid' onClick={handleApplyFilter}>
-            Apply Filter
-          </Button>
-          <Button leftIcon={<FcClearFilters />} colorScheme='green' variant='outline'onClick={handleClearFilter} style={{ marginLeft: '10px' }}>
-            Clear Filter
-          </Button>
-        </Offcanvas.Body>
-      </Offcanvas>
+          <DrawerFooter>
+            <Button leftIcon={<FaFilter />} colorScheme='teal' variant='solid' onClick={handleApplyFilter}>
+              Apply Filter
+            </Button>
+            <Button leftIcon={<FcClearFilters />} colorScheme='green' variant='outline' onClick={handleClearFilter} style={{ marginLeft: '10px' }}>
+              Clear Filter
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 }
