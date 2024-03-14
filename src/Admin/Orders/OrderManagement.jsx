@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import {
   Table,
   Thead,
@@ -12,28 +11,32 @@ import {
 } from '@chakra-ui/react';
 
 function OrderManagement() {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState([
+    {
+      _id: '1',
+      user: 'John Doe',
+      totalPrice: 50,
+      isPaid: true,
+      isProcessing: false,
+    },
+    {
+      _id: '2',
+      user: 'Jane Smith',
+      totalPrice: 75,
+      isPaid: false,
+      isProcessing: true,
+    },
+    // Add more orders as needed
+  ]);
 
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-  const fetchOrders = async () => {
-    try {
-      const response = await axios.get('/api/orders');
-      setOrders(response.data);
-    } catch (error) {
-      console.error('Error fetching orders:', error);
-    }
-  };
-
-  const handleFulfillOrder = async (orderId) => {
-    try {
-      await axios.put(`/api/orders/${orderId}/fulfill`);
-      fetchOrders();
-    } catch (error) {
-      console.error('Error fulfilling order:', error);
-    }
+  const handleFulfillOrder = (orderId) => {
+    // Logic to fulfill order
+    console.log('Order fulfilled:', orderId);
+    // Update orders after fulfilling order (if needed)
+    const updatedOrders = orders.map((order) =>
+      order._id === orderId ? { ...order, isProcessing: true } : order
+    );
+    setOrders(updatedOrders);
   };
 
   return (
