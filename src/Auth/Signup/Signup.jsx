@@ -15,7 +15,7 @@ import './Signup.css';
 import { FcGoogle } from 'react-icons/fc';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from 'axios';
-import { baseUrl } from '../../baseUrl';
+import baseUrl from '../../baseUrl';
 
 const Signup = () => {
   const { saveUser } = useUser();

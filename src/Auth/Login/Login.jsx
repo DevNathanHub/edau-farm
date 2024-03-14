@@ -11,7 +11,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { CiLogin } from "react-icons/ci";
 import { EmailIcon } from '@chakra-ui/icons';
-import { baseUrl } from '../../baseUrl';
+import baseUrl from '../../baseUrl';
 import axios from 'axios';
 
 import './Login.css';
@@ -70,6 +70,8 @@ const Login = () => {
   };
 
   const handleGoogleSignIn = async () => {
+    console.log(baseUrl);
+
     setGoogleLoading(true);
     const provider = new GoogleAuthProvider();
     try {

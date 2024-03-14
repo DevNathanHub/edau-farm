@@ -1,3 +1,3 @@
-const baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:5000';
+const baseUrl = process.env.REACT_APP_BASE_URL || 'https://edau-api.onrender.com';
 
 export default baseUrl;
