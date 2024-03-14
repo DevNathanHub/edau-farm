@@ -1,57 +1,62 @@
-import { Button, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
-import React, { useState, useEffect } from 'react'; // Import useEffect for socket connection
-import io from 'socket.io-client'; // Import io from socket.io-client
+import React, {  useEffect } from 'react';
+import io from 'socket.io-client';
+import {
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from '@chakra-ui/react';
+
+//import ProductManagement from '../Products/ProductManagement';
+import OrderManagement from '../Orders/OrderManagement';
+import Notifications from '../Updates/Notifications';
+import ProductsTable from '../Products/ProductsTable';
+import UsersTable from '../Users/UsersTable';
 
 function Dashboard() {
-  const [newUser, setNewUser] = useState(null);
 
   useEffect(() => {
-    const socket = io(); // Connect to socket.io server
+    const socket = io();
 
-    // Listen for 'userSignedUp' event
     socket.on('userSignedUp', (data) => {
       console.log('New user signed up:', data.newUser);
-      // Perform actions based on the new user data, such as updating the UI
-      // Example: Add the new user's information to a list of users
-      alert("New User Created");
-      setNewUser(data.newUser);
-      // Update the UI to display the new user's information
+      alert('New User Created');
     });
 
-    // Clean up the socket connection when the component unmounts
     return () => {
       socket.disconnect();
     };
-  }, []); // Empty dependency array ensures this effect runs only once on component mount
+  }, []);
+
 
   return (
-    <div className='component'>
-      Dashboard {newUser ? <><Button>View Users</Button></> : null}
-      <Tabs>
-      <TabList>
-        <Tab>Products</Tab>
-        <Tab>Users</Tab>
-        <Tab>Updates</Tab>
-        <Tab>Settings</Tab>
+    <div className="component">
+      Dashboard
+      <Tabs  >
+        <TabList>
+          <Tab>Products</Tab>
+          <Tab>Users</Tab>
+          <Tab>Orders</Tab>
+          <Tab>Updates</Tab>
+        </TabList>
 
-      </TabList>
+        <TabPanels>
+          <TabPanel>
+            <ProductsTable/>
+          </TabPanel>
+          <TabPanel>
+            <UsersTable/>
+          </TabPanel>
+          <TabPanel>
+            <OrderManagement/>
+          </TabPanel>
+          <TabPanel>
+            <Notifications/>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
 
-      <TabPanels>
-        <TabPanel>
-          <p>Products</p>
-        </TabPanel>
-        <TabPanel>
-          <p>Users</p>
-        </TabPanel>
-        <TabPanel>
-          <p>Updates</p>
-        </TabPanel>
-        <TabPanel>
-          <p>Settings</p>
-        </TabPanel>
-
-      </TabPanels>
-    </Tabs>
     </div>
   );
 }
