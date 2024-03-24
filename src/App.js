@@ -19,6 +19,7 @@ import Dashboard from "./Admin/Dashboard/Dashboard";
 import Contact from "./Components/Contact/Contact";
 import FAQ from "./Components/FAQ/FAQ";
 import AboutUs from "./Components/AboutUs/AboutUs";
+import Success from "./Components/Success/success";
 
 function App() {
 
@@ -31,6 +32,8 @@ function App() {
 				<Route path="/auth/login" element={<Login/>} />
 				<Route path="/auth/signup" element={<Signup/>} />
 				<Route path="/shop" element={<Shop/>} /> 
+				<Route path="/success" element={<Success/>} /> 
+
 				<Route path="/edau-farm-admin" element={<Dashboard/>} />
 				<Route path="/shop/product/:id" element={<Product/>}/>
 				<Route path="/shop/checkout" element={<Checkout/>}/>

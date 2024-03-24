@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
-import { CiLogin, CiUser } from "react-icons/ci";
+import { CiLogin } from "react-icons/ci";
+import { RiAccountPinCircleLine } from "react-icons/ri";
 import { LuBaggageClaim } from "react-icons/lu";
 import { IoCreateOutline } from "react-icons/io5";
-import { TbJewishStarFilled } from "react-icons/tb";
+import { TbJewishStar } from "react-icons/tb";
+import { HiOutlineLogout } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { Link as ReactRouterLink } from 'react-router-dom'
 import { Link as ChakraLink } from '@chakra-ui/react'
@@ -119,10 +121,10 @@ const Navbar = () => {
                   <div className="profile-menu"><Avatar size='xs' src={user.photoURL} name={user.displayName || user.email} />  {` ${user.displayName || user.email}`}</div>
                 </MenuButton>
                 <MenuList >
-                  <MenuItem ><ChakraLink as={ReactRouterLink} to='/account' style={{ display: 'flex', gap: '5px', alignItems: 'center' }} className="menu-item"><CiUser /> Account</ChakraLink></MenuItem>
+                  <MenuItem ><ChakraLink as={ReactRouterLink} to='/account' style={{ display: 'flex', gap: '5px', alignItems: 'center' }} className="menu-item"><RiAccountPinCircleLine /> Account</ChakraLink></MenuItem>
                   <MenuItem ><ChakraLink as={ReactRouterLink} to='/orders' style={{ display: 'flex', gap: '5px', alignItems: 'center' }} className="menu-item"><LuBaggageClaim /> Orders</ChakraLink></MenuItem>
-                  <MenuItem ><ChakraLink as={ReactRouterLink} to='/favorites' style={{ display: 'flex', gap: '5px', alignItems: 'center' }} className="menu-item"><TbJewishStarFilled /> Favorites</ChakraLink></MenuItem>
-                  <MenuItem style={{ color: 'red' }} onClick={logout}>Logout</MenuItem>
+                  <MenuItem ><ChakraLink as={ReactRouterLink} to='/favorites' style={{ display: 'flex', gap: '5px', alignItems: 'center' }} className="menu-item"><TbJewishStar /> Favorites</ChakraLink></MenuItem>
+                  <MenuItem style={{ color: 'red' }} onClick={logout}><Button rightIcon={<HiOutlineLogout/>} size='sm' colorScheme='red' width='100%'>Logout</Button></MenuItem>
                 </MenuList>
               </Menu>
             </div>

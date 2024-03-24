@@ -25,8 +25,8 @@ const storage = getStorage(app);
 const uploadToFirebase = async (file, userEmail) => {
   try {
     // Create a reference to the Firebase storage bucket with a new folder path
-    const folderName = 'uploads'; // Specify the name of the folder
-    const folderRef = ref(storage, `${folderName}/${Date.now()}_${userEmail}/${file.name}`);
+    const folderName = 'products'; // Specify the name of the folder
+    const folderRef = ref(storage, `${folderName}/${Date.now()}_/${file.name}`);
     
     // Upload the file to Firebase storage
     await uploadBytes(folderRef, file);

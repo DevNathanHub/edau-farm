@@ -3,11 +3,11 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase'; // Corrected import statement
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'; // Import Google auth methods
 import { useUser } from '../../Context/userContext';
-import { Input, Button, InputGroup, InputRightElement, Box, Divider, AbsoluteCenter } from '@chakra-ui/react'; // Import Chakra UI components
+import { Input, Button, InputGroup, InputRightElement, Box, Divider, AbsoluteCenter, Text } from '@chakra-ui/react'; // Import Chakra UI components
 import { EmailIcon } from '@chakra-ui/icons';
 import { Badge, Spinner } from 'react-bootstrap';
 import { IoCreateOutline } from "react-icons/io5";
@@ -131,10 +131,7 @@ const Signup = () => {
       setGoogleLoading(false);
     }
   };
-  const handleLoginNav = () => {
-    navigate('/auth/login');
-  }
-
+  
   return (
     <div className="signup-container component" >
       <TransitionGroup>
@@ -217,6 +214,12 @@ const Signup = () => {
                   Signup
                 </Button>
               </div>
+              <Box position='relative'>
+              <Divider/>
+              <AbsoluteCenter px='2'>
+                OR
+              </AbsoluteCenter>
+            </Box>
               <div className="form-group">
                 <Button 
                   type="button" 
@@ -230,21 +233,11 @@ const Signup = () => {
                   Continue with Google
                 </Button>
               </div>
-              <Box position='relative'>
-              <Divider/>
-              <AbsoluteCenter px='2'>
-                OR
-              </AbsoluteCenter>
-            </Box>
+             
             <div className='form-group'>
-              <Button 
-                variant='outline' 
-                colorScheme='blue' 
-                onClick={handleLoginNav} 
-                borderRadius='30px'
-              >
-                Login
-              </Button>
+            <Text colorScheme='blue'>
+                  <Link to='/auth/login' color='blue' >Have an Account? <u><em>Login Instead.</em></u></Link> 
+                </Text>
             </div>
             </form>
           </div>

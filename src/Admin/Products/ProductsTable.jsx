@@ -1,165 +1,129 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Thead, Tbody, Tr, Th, Td, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
+import axios from 'axios';
+import {
+  Button,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  chakra,
+  IconButton,
+  Tooltip,
+  useToast,
+  useDisclosure
+} from '@chakra-ui/react';
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
+import AddProductModal from './AddProductModal';
+import baseUrl from '../../baseUrl';
+import EditProductModal from './EditProductModal';
 
-function ProductsTable() {
+const ProductsTable = () => {
   const [products, setProducts] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    price: '',
-    description: '',
-  });
+  const toast = useToast();
+  const { isOpen: isAddModalOpen, onOpen: onAddModalOpen, onClose: onAddModalClose } = useDisclosure();
+  const { isOpen: isEditModalOpen, onOpen: onEditModalOpen, onClose: onEditModalClose } = useDisclosure();
   const [selectedProductId, setSelectedProductId] = useState(null);
 
-  const toast = useToast();
-
   useEffect(() => {
-    // Simulated fetch of products data from an API
-    // Replace this with your actual data fetching logic
-    const fetchedProducts = [
-      { id: 1, name: 'Product 1', price: 10, description: 'Description for Product 1' },
-      { id: 2, name: 'Product 2', price: 20, description: 'Description for Product 2' },
-      { id: 3, name: 'Product 3', price: 30, description: 'Description for Product 3' },
-    ];
-    setProducts(fetchedProducts);
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}/api/products`);
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-    setFormData({ name: '', price: '', description: '' });
-    setSelectedProductId(null);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleEditProduct = (id) => {
-    const selectedProduct = products.find((product) => product.id === id);
-    setFormData({
-      name: selectedProduct.name,
-      price: selectedProduct.price,
-      description: selectedProduct.description,
-    });
-    setSelectedProductId(id);
-    setIsModalOpen(true);
-  };
-
-  const handleSaveProduct = () => {
-    // Simulated updating product logic
-    if (selectedProductId) {
-      setProducts((prevProducts) =>
-        prevProducts.map((product) =>
-          product.id === selectedProductId
-            ? { ...product, name: formData.name, price: formData.price, description: formData.description }
-            : product
-        )
-      );
+  const handleDeleteProduct = async (productId) => {
+    try {
+      await axios.delete(`${baseUrl}/api/products/${productId}`);
+      setProducts(products.filter((product) => product._id !== productId));
       toast({
-        title: 'Product updated.',
+        title: 'Product deleted successfully',
         status: 'success',
         duration: 3000,
-        isClosable: true,
+        isClosable: true
       });
-    } else {
-      // Simulated adding new product logic
-      const newProduct = {
-        id: Date.now(), // Simulated unique id
-        name: formData.name,
-        price: formData.price,
-        description: formData.description,
-      };
-      setProducts((prevProducts) => [...prevProducts, newProduct]);
+    } catch (error) {
+      console.error('Error deleting product:', error);
       toast({
-        title: 'Product added.',
-        status: 'success',
+        title: 'An error occurred',
+        description: error.message,
+        status: 'error',
         duration: 3000,
-        isClosable: true,
+        isClosable: true
       });
     }
-    handleModalClose();
   };
 
-  const handleDeleteProduct = (id) => {
-    // Simulated deleting product logic
-    setProducts((prevProducts) => prevProducts.filter((product) => product.id !== id));
-    toast({
-      title: 'Product deleted.',
-      status: 'success',
-      duration: 3000,
-      isClosable: true,
-    });
+  const handleEditProduct = (productId) => {
+    setSelectedProductId(productId);
+    onEditModalOpen();
   };
 
   return (
     <div>
-      <Button colorScheme="blue" onClick={handleModalOpen} mb="4">
-        Add Product
-      </Button>
-
-      <Table variant="simple">
+      <Button colorScheme="blue" mb="4" onClick={onAddModalOpen}>Add Product</Button>
+      <AddProductModal isOpen={isAddModalOpen} onClose={onAddModalClose} />
+      <EditProductModal isOpen={isEditModalOpen} onClose={onEditModalClose} productId={selectedProductId} />
+      <Table variant="striped" colorScheme="gray">
         <Thead>
           <Tr>
             <Th>Name</Th>
-            <Th>Price</Th>
             <Th>Description</Th>
+            <Th>Price (Ksh)</Th>
+            <Th>Variations</Th>
             <Th>Actions</Th>
           </Tr>
         </Thead>
         <Tbody>
           {products.map((product) => (
-            <Tr key={product.id}>
+            <Tr key={product._id}>
               <Td>{product.name}</Td>
-              <Td>{product.price}</Td>
-              <Td>{product.description}</Td>
               <Td>
-                <Button colorScheme="green" onClick={() => handleEditProduct(product.id)} mr="2">
-                  Edit
-                </Button>
-                <Button colorScheme="red" onClick={() => handleDeleteProduct(product.id)}>
-                  Delete
-                </Button>
+                {product.description.map((desc, index) => (
+                  <div key={index}>{desc}</div>
+                ))}
+              </Td>
+              <Td>{product.price}</Td>
+              <Td>
+                <ul>
+                  {product.variations.map((variation, index) => (
+                    <li key={index}>
+                      Size: {variation.size}, In Stock: {variation.quantity}
+                    </li>
+                  ))}
+                </ul>
+              </Td>
+              <Td>
+                <chakra.span mr="2">
+                  <Tooltip label="Edit" aria-label="Edit">
+                    <IconButton
+                      icon={<EditIcon />}
+                      onClick={() => handleEditProduct(product._id)}
+                    />
+                  </Tooltip>
+                </chakra.span>
+                <chakra.span>
+                  <Tooltip label="Delete" aria-label="Delete">
+                    <IconButton
+                      icon={<DeleteIcon />}
+                      onClick={() => handleDeleteProduct(product._id)}
+                    />
+                  </Tooltip>
+                </chakra.span>
               </Td>
             </Tr>
           ))}
         </Tbody>
       </Table>
-
-      <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{selectedProductId ? 'Edit Product' : 'Add Product'}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <FormControl mb="4">
-              <FormLabel>Name</FormLabel>
-              <Input type="text" name="name" value={formData.name} onChange={handleInputChange} />
-            </FormControl>
-            <FormControl mb="4">
-              <FormLabel>Price</FormLabel>
-              <Input type="number" name="price" value={formData.price} onChange={handleInputChange} />
-            </FormControl>
-            <FormControl mb="4">
-              <FormLabel>Description</FormLabel>
-              <Input type="text" name="description" value={formData.description} onChange={handleInputChange} />
-            </FormControl>
-            <Button colorScheme="blue" onClick={handleSaveProduct} mr="2">
-              Save
-            </Button>
-            <Button onClick={handleModalClose}>Cancel</Button>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
     </div>
   );
-}
+};
 
 export default ProductsTable;

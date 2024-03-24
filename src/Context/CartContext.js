@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 export const CartContext = createContext();
@@ -15,13 +15,11 @@ export const CartProvider = ({ children }) => {
   
   useEffect(() => {
     calculateTotalPrice();
-  }, [cartItems]); // Add cartItems as a dependency
+  }, [cartItems]); 
 
   const handlePurchaseItem = (product) => {
     setSingleItem(product);
-   
   };
-  
 
   const fetchCart = () => {
     const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
@@ -48,8 +46,6 @@ export const CartProvider = ({ children }) => {
     }
     toast.success('Added to cart');
   };
-  
-  
 
   const removeFromCart = (cartItemId) => {
     const updatedCartItems = cartItems.filter(item => item.id !== cartItemId);
@@ -94,30 +90,26 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
   };
 
-  
-  // Inside your CartProvider component
-const calculateTotalPrice = () => {
-  try {
-    const totalPrice = cartItems.reduce((total, item) => {
-      // Ensure item.price and item.quantity are valid numbers before multiplying
-      const price = typeof item.price === 'number' ? item.price : 0;
-      const quantity = typeof item.quantity === 'number' ? item.quantity : 0;
-      return total + (price * quantity);
-    }, 0);
+  const calculateTotalPrice = useCallback(() => {
+    try {
+      const totalPrice = cartItems.reduce((total, item) => {
+        // Ensure item.price and item.quantity are valid numbers before multiplying
+        const price = typeof item.price === 'number' ? item.price : 0;
+        const quantity = typeof item.quantity === 'number' ? item.quantity : 0;
+        return total + (price * quantity);
+      }, 0);
 
-    // Format totalPrice to two decimal places
-    const formattedTotalPrice = parseFloat(totalPrice).toFixed(2);
+      // Format totalPrice to two decimal places
+      const formattedTotalPrice = parseFloat(totalPrice).toFixed(2);
 
-    // Update state with formatted totalPrice
-    setTotalPrice(formattedTotalPrice);
-  } catch (error) {
-    // Handle any errors gracefully
-    console.error('Error calculating total price:', error);
-    setTotalPrice(0); // Set totalPrice to 0 if calculation fails
-  }
-};
-
-  
+      // Update state with formatted totalPrice
+      setTotalPrice(formattedTotalPrice);
+    } catch (error) {
+      // Handle any errors gracefully
+      console.error('Error calculating total price:', error);
+      setTotalPrice(0); // Set totalPrice to 0 if calculation fails
+    }
+  }, [cartItems]);
 
   return (  
     <CartContext.Provider value={{ 
@@ -133,9 +125,7 @@ const calculateTotalPrice = () => {
       setCartItems, 
       totalPrice 
     }}>
-
       {children}
-
     </CartContext.Provider>
   );
 };

@@ -80,7 +80,7 @@ function Cart() {
                       <Badge onClick={() => handleIncrementQuantity(item.id)} style={{cursor: 'pointer'}}>+</Badge>
                     </div>
                     <div className='cart-price'>${item.price}</div>
-                    <div><Button color='green' size='xs' onClick={() => handleAddSingleItem(item)}>Checkout</Button></div>
+                    <div>{cartItems.length === 1?  null : <Button colorScheme='teal' size='xs' onClick={() => handleAddSingleItem(item)}>Checkout</Button>} </div>
                     <div className='delete-cart-item' onClick={() => handleRemove(item)}><MdDeleteSweep className='remove-icon' title='remove'/></div>
                   </div>
                 </div>
