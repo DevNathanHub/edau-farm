@@ -44,6 +44,22 @@
     .footer-btn{
         width: 48%;
     }
+    /* Add this CSS to your stylesheet */
+
+    .dark-pagination .ant-pagination-item-active a,
+    .dark-pagination .ant-pagination-item-active a:hover,
+    .dark-pagination .ant-pagination-item-active span,
+    .dark-pagination .ant-pagination-item-active span:hover {
+    color: black !important; /* Opposite color for dark theme */
+    }
+
+    .light-pagination .ant-pagination-item-active a,
+    .light-pagination .ant-pagination-item-active a:hover,
+    .light-pagination .ant-pagination-item-active span,
+    .light-pagination .ant-pagination-item-active span:hover {
+    color: white !important; /* Opposite color for light theme */
+    }
+
     @media (max-width: 768px) {
 
         .shop-card{

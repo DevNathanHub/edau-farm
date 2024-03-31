@@ -9,17 +9,20 @@ import { DeliveryAddressProvider } from './Context/deliveryAddressContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserProvider } from './Context/userContext';
+import ProductProvider from './Components/Shop/ProductContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ChakraProvider>
       <UserProvider>
+        <ProductProvider>
         <CartProvider>
           <DeliveryAddressProvider>
             <App />
           </DeliveryAddressProvider>
         </CartProvider>
+        </ProductProvider>
       </UserProvider>
     </ChakraProvider>
     <ToastContainer 

@@ -11,6 +11,7 @@ import { BiPurchaseTag } from "react-icons/bi";
 import './shop.css';
 import { Badge } from 'react-bootstrap';
 import ContentNotFound from '../../NotFound/ContentNotFound';
+import useItems from 'antd/es/menu/hooks/useItems';
 
 function Shop() {
   const [products, setProducts] = useState([]);
@@ -26,7 +27,12 @@ function Shop() {
     maxPrice: 1000,
   });
   const { addToCart, handlePurchaseItem, cartItems } = useContext(CartContext);
-
+  const [currentTheme, setCurrentTheme] = useState(null);
+  useEffect(() => {
+    const themeColor = localStorage.getItem('chakra-ui-color-mode');
+    setCurrentTheme(themeColor);
+  });
+  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -43,9 +49,11 @@ function Shop() {
 
   useEffect(() => {
     const state = location.state;
+
     if (state && state.currentPage) {
       setCurrentPage(state.currentPage);
     }
+
   }, [location.state]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -153,6 +161,7 @@ function Shop() {
           pageSize={itemsPerPage}
           onChange={paginate}
           showSizeChanger={false}
+          style={{ color: currentTheme === 'dark' ? 'goldenrod' : 'green' }}
         />
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "@firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage } from "firebase/storage";
 
 
 const firebaseConfig = {
@@ -22,24 +22,4 @@ const storage = getStorage(app);
 
 
 
-const uploadToFirebase = async (file, userEmail) => {
-  try {
-    // Create a reference to the Firebase storage bucket with a new folder path
-    const folderName = 'products'; // Specify the name of the folder
-    const folderRef = ref(storage, `${folderName}/${Date.now()}_/${file.name}`);
-    
-    // Upload the file to Firebase storage
-    await uploadBytes(folderRef, file);
-    
-    // Get the download URL for the uploaded file
-    const downloadUrl = await getDownloadURL(folderRef);
-    
-    // Return the download URL
-    return downloadUrl;
-  } catch (error) {
-    console.error('Error uploading file to Firebase:', error);
-    throw error;
-  }
-};
-
-export { app, db, auth, storage, uploadToFirebase };
+export { app, db, auth, storage };

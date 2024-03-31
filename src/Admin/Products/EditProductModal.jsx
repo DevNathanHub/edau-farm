@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import baseUrl from '../../baseUrl';
-import { uploadToFirebase } from '../../firebase'; // Import the uploadToFirebase function
+import { storage } from '../../firebase'; // Import Firebase storage
 
 const EditProductModal = ({ isOpen, onClose, productId }) => {
   const [formData, setFormData] = useState({
@@ -67,7 +67,10 @@ const EditProductModal = ({ isOpen, onClose, productId }) => {
   const handleSaveProduct = async () => {
     try {
       const uploadPromises = fileList.map(async (file) => {
-        const downloadURL = await uploadToFirebase(file);
+        const storageRef = storage.ref();
+        const imageRef = storageRef.child(file.name);
+        await imageRef.put(file);
+        const downloadURL = await imageRef.getDownloadURL();
         return downloadURL;
       });
 
