@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { PiShoppingCartLight } from "react-icons/pi";
 import { CartContext } from '../../Context/CartContext';
-import { Badge, Button, Image, Stack, Text, useMediaQuery, Tooltip, IconButton, useDisclosure, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Modal, Card, Divider, HStack, Box, Link } from '@chakra-ui/react';
-import { MdDeleteSweep } from "react-icons/md";
+import { Badge, Button, Image, Stack, Text, useMediaQuery, Tooltip, useDisclosure, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Modal, Card, Divider, HStack, Box, Link } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import './cart.css';
 // Chakra UI Drawer components
@@ -18,7 +17,7 @@ import {
 import { DeleteIcon, ViewIcon } from '@chakra-ui/icons';
 
 function Cart() {
-  const { cartItems, totalPrice, removeFromCart, handlePurchaseItem, handleIncrementQuantity, handleDecrementQuantity, setSingleItem } = useContext(CartContext);
+  const { cartItems, totalPrice, removeFromCart, handleIncrementQuantity, handleDecrementQuantity, setSingleItem } = useContext(CartContext);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const [isLargerThan30] = useMediaQuery("(min-width: 50em)");

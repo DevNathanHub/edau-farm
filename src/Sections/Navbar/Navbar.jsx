@@ -47,8 +47,9 @@ const Navbar = () => {
       </ChakraLink>
       <ThemeContext />
       <Button
-        
-        
+        className="navbar-toggler"
+        type="button"
+        variant='outline'
         onClick={toggleMenu}
       >
         {isOpen ? <CloseIcon /> : <HamburgerIcon />}
