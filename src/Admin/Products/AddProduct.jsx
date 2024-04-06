@@ -1,139 +1,146 @@
 import React, { useState } from 'react';
+import { Button, FormControl, FormLabel, Input, VStack, Box, Text, Image, useToast } from "@chakra-ui/react";
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../firebase';
 import axios from 'axios';
-import { useToast } from '@chakra-ui/react';
 import baseUrl from '../../baseUrl';
-import { FormControl, FormLabel, Input, Textarea, Button, Image } from '@chakra-ui/react';
 
-function AddProduct() {
+const AddProduct = () => {
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+  const [description, setDescription] = useState(['']);
+  const [variations, setVariations] = useState([{ size: '', quantity: 0 }]);
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
   const toast = useToast();
 
-  const [formData, setFormData] = useState({
-    id: '',
-    title: '',
-    price: '',
-    description: '',
-    category: '',
-    image: '',
-    rating: {
-      rate: '',
-      count: '',
-    },
-  });
-
-  const [imagePreview, setImagePreview] = useState('');
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name === 'image' && e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(e.target.files[0]);
-
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: e.target.files[0],
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setImages(files);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleAddDescription = () => {
+    setDescription([...description, '']);
+  };
 
+  const handleRemoveDescription = (index) => {
+    const newDescription = [...description];
+    newDescription.splice(index, 1);
+    setDescription(newDescription);
+  };
+
+  const handleAddVariation = () => {
+    setVariations([...variations, { size: '', quantity: 0 }]);
+  };
+
+  const handleRemoveVariation = (index) => {
+    const newVariations = [...variations];
+    newVariations.splice(index, 1);
+    setVariations(newVariations);
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true); // Set loading to true when submitting
     try {
-      const response = await axios.post(`${baseUrl}/api/products`, formData);
-      console.log('Product uploaded successfully:', response.data);
+      const imageUrls = await Promise.all(images.map(async (image) => {
+        const storageRef = ref(storage, image.name);
+        await uploadBytes(storageRef, image);
+        return await getDownloadURL(storageRef);
+      }));
+  
+      const formData = {
+        name,
+        price,
+        description,
+        variations,
+        imageUrl: imageUrls,
+      };
+      console.log("form data", formData);
+      await axios.post(`${baseUrl}/api/products`, formData);
+  
       toast({
-        title: 'Success',
-        description: 'Product uploaded successfully',
-        status: 'success',
-        duration: 3000,
+        title: "Product added.",
+        status: "success",
+        duration: 5000,
         isClosable: true,
       });
-      setFormData({
-        id: '',
-        title: '',
-        price: '',
-        description: '',
-        category: '',
-        image: '',
-        rating: {
-          rate: '',
-          count: '',
-        },
-      });
-      setImagePreview('');
+  
+      // Clear form values after successful submission
+      setName('');
+      setPrice('');
+      setDescription(['']);
+      setVariations([{ size: '', quantity: 0 }]);
+      setImages([]);
+  
     } catch (error) {
-      console.error('Error uploading product:', error);
       toast({
-        title: 'Error',
-        description: 'Error uploading product',
-        status: 'error',
-        duration: 3000,
+        title: "Error adding product.",
+        description: error.message,
+        status: "error",
+        duration: 5000,
         isClosable: true,
       });
+    } finally {
+      setLoading(false); // Set loading to false after submission
     }
   };
+  
 
   return (
-    <div>
-      <h2>Create Product</h2>
-      <form onSubmit={handleSubmit}>
-        <FormControl>
-          <FormLabel>ID:</FormLabel>
-          <Input type="number" name="id" value={formData.id} onChange={handleInputChange} />
-        </FormControl>
-        <br />
-
-        <FormControl>
-          <FormLabel>Title:</FormLabel>
-          <Input type="text" name="title" value={formData.title} onChange={handleInputChange} />
-        </FormControl>
-        <br />
-
-        <FormControl>
-          <FormLabel>Price:</FormLabel>
-          <Input type="number" name="price" value={formData.price} onChange={handleInputChange} />
-        </FormControl>
-        <br />
-
-        <FormControl>
-          <FormLabel>Description:</FormLabel>
-          <Textarea name="description" value={formData.description} onChange={handleInputChange} />
-        </FormControl>
-        <br />
-
-        <FormControl>
-          <FormLabel>Category:</FormLabel>
-          <Input type="text" name="category" value={formData.category} onChange={handleInputChange} />
-        </FormControl>
-        <br />
-
-        <FormControl>
-          <FormLabel>Image:</FormLabel>
-          <Input type="file" name="image" onChange={handleInputChange} />
-          {imagePreview && <Image src={imagePreview} alt="Preview" maxW="200px" mt="10px" />}
-        </FormControl>
-        <br />
-
-        <FormControl>
-          <FormLabel>Rating:</FormLabel>
-          <Input type="number" name="rate" placeholder="Rate" value={formData.rating.rate} onChange={(e) => handleInputChange({ target: { name: 'rating', value: { ...formData.rating, rate: e.target.value } } })} />
-          <Input type="number" name="count" placeholder="Count" value={formData.rating.count} onChange={(e) => handleInputChange({ target: { name: 'rating', value: { ...formData.rating, count: e.target.value } } })} />
-        </FormControl>
-        <br />
-
-        <Button type="submit">Upload Product</Button>
-      </form>
-    </div>
+    <VStack spacing={4}>
+      <FormControl>
+        <FormLabel>Name</FormLabel>
+        <Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      </FormControl>
+      <FormControl>
+        <FormLabel>Price</FormLabel>
+        <Input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+      </FormControl>
+      <Box>
+        <FormLabel>Description</FormLabel>
+        {description.map((desc, index) => (
+          <div key={index}>
+            <Input value={desc} onChange={(e) => {
+              const newDescription = [...description];
+              newDescription[index] = e.target.value;
+              setDescription(newDescription);
+            }} />
+            <Button onClick={() => handleRemoveDescription(index)}>-</Button>
+          </div>
+        ))}
+        <Button onClick={handleAddDescription}>+</Button>
+      </Box>
+      <Box>
+        <FormLabel>Variations</FormLabel>
+        {variations.map((variation, index) => (
+          <div key={index}>
+            <Input value={variation.size} onChange={(e) => {
+              const newVariations = [...variations];
+              newVariations[index].size = e.target.value;
+              setVariations(newVariations);
+            }} />
+            <Input type="number" value={variation.quantity} onChange={(e) => {
+              const newVariations = [...variations];
+              newVariations[index].quantity = parseInt(e.target.value);
+              setVariations(newVariations);
+            }} />
+            <Button onClick={() => handleRemoveVariation(index)}>-</Button>
+          </div>
+        ))}
+        <Button onClick={handleAddVariation}>+</Button>
+      </Box>
+      <FormControl>
+        <FormLabel>Upload Images</FormLabel>
+        <Input type="file" multiple onChange={handleImageChange} />
+      </FormControl>
+      <Button onClick={handleSubmit} disabled={loading}>{loading ? "Loading..." : "Submit"}</Button>
+      <Box>
+        {images.map((image, index) => (
+          <Image key={index} src={URL.createObjectURL(image)} alt={`Preview ${index}`} />
+        ))}
+      </Box>
+    </VStack>
   );
-}
+};
 
 export default AddProduct;

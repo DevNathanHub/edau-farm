@@ -37,6 +37,11 @@
         top: 0;
         width: fit-content;
     }
+    .delivery{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     .footer{
         display: flex;
         justify-content: space-evenly;
@@ -59,10 +64,42 @@
     .light-pagination .ant-pagination-item-active span:hover {
     color: white !important; /* Opposite color for light theme */
     }
+    /* Add this CSS to your existing stylesheet */
+    .dark-pagination .ant-pagination-prev-icon,
+    .dark-pagination .ant-pagination-next-icon,
+    .light-pagination .ant-pagination-prev-icon,
+    .light-pagination .ant-pagination-next-icon {
+    color: black !important; /* Color for previous and next icons in dark theme */
+    }
 
-    @media (max-width: 768px) {
+    .light-pagination .ant-pagination-prev:hover .ant-pagination-item-link,
+    .light-pagination .ant-pagination-next:hover .ant-pagination-item-link {
+    color: black !important; /* Hover color for previous and next icons in light theme */
+    }
+
+    .dark-pagination .ant-pagination-prev:hover .ant-pagination-item-link,
+    .dark-pagination .ant-pagination-next:hover .ant-pagination-item-link {
+    color: green !important; /* Hover color for previous and next icons in dark theme */
+    }
+    /* Add this CSS to your existing stylesheet */
+    .dark-pagination .ant-pagination-prev-icon,
+    .dark-pagination .ant-pagination-next-icon {
+    color: goldenrod !important; /* Color for previous and next icons in dark mode */
+    border: 1px solid white !important; /* Border color for previous and next icons in dark mode */
+    border-radius: 50% !important; /* Border radius for previous and next icons in dark mode */
+    }
+
+    .light-pagination .ant-pagination-prev-icon,
+    .light-pagination .ant-pagination-next-icon {
+    color: black !important; /* Color for previous and next icons in light mode */
+    border: 1px solid goldenrod !important; /* Border color for previous and next icons in light mode */
+    border-radius: 50% !important; /* Border radius for previous and next icons in light mode */
+    }
+
+        @media (max-width: 768px) {
 
         .shop-card{
-         width: 80%;         
+         width: 100%;         
         }
+        
     }

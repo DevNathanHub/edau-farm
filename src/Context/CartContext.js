@@ -17,9 +17,7 @@ export const CartProvider = ({ children }) => {
     calculateTotalPrice();
   }, [cartItems]); 
 
-  const handlePurchaseItem = (product) => {
-    setSingleItem(product);
-  };
+  
 
   const fetchCart = () => {
     const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
@@ -115,7 +113,6 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider value={{ 
       singleItem,
       setSingleItem,
-      handlePurchaseItem,
       cartItems,
       addToCart,
       removeFromCart, 

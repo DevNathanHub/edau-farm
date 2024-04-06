@@ -10,7 +10,7 @@ function Checkout() {
     }
   return (
     <div>
-        <div>Checkout {singleItem.title}</div>
+        <div>Checkout {singleItem.name}</div>
         <div><DeliveryAddress/></div>
 
     </div>

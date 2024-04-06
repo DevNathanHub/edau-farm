@@ -19,8 +19,10 @@ import Dashboard from "./Admin/Dashboard/Dashboard";
 import Contact from "./Components/Contact/Contact";
 import FAQ from "./Components/FAQ/FAQ";
 import AboutUs from "./Components/AboutUs/AboutUs";
-import Success from "./Components/Success/success";
+//import Success from "./Components/Success/success";
 import TempShop from "./Components/Shop/TempShop";
+import Upload from "./Components/ImageUpload/Upload";
+import ProductList from "./Components/Home/ProductList";
 
 function App() {
 
@@ -34,9 +36,9 @@ function App() {
 				<Route path="/auth/signup" element={<Signup/>} />
 				<Route path="/shop" element={<Shop/>} /> 
 				<Route path="/temp-shop" element={<TempShop/>} /> 
-
-				<Route path="/success" element={<Success/>} /> 
-
+				<Route path="/temp-shop" element={<TempShop/>} /> 
+				<Route path="/upload" element={<Upload/>} /> 
+				<Route path="/card" element={<ProductList/>} /> 
 				<Route path="/edau-farm-admin" element={<Dashboard/>} />
 				<Route path="/shop/product/:id" element={<Product/>}/>
 				<Route path="/shop/checkout" element={<Checkout/>}/>
