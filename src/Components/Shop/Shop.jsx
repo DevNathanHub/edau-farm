@@ -1,6 +1,6 @@
     import React, { useState, useEffect, useContext } from 'react';
     import { useNavigate, useLocation } from 'react-router-dom';
-    import { Badge, Card, CardBody, CardFooter, Button, Stack, Heading, Text, Image, Input, InputGroup, InputRightElement, HStack } from '@chakra-ui/react';
+    import { Badge, Card, CardBody, CardFooter, Button, Stack, Heading, Text, Image, Input, InputGroup, InputRightElement, HStack,  } from '@chakra-ui/react';
     import { CiDeliveryTruck } from "react-icons/ci";
     import { Pagination, Spin } from 'antd';
     import { CartContext } from '../../Context/CartContext';
@@ -17,13 +17,14 @@
       const location = useLocation();
       const [isLoading, setIsLoading] = useState(true);
       const [currentPage, setCurrentPage] = useState(1);
-      const [itemsPerPage] = useState(4);
+      const [itemsPerPage] = useState(7);
       const [searchQuery, setSearchQuery] = useState('');
       const [filters, setFilters] = useState({
         category: '',
         minPrice: 0,
-        maxPrice: 1000,
+        maxPrice: 100000,
       });
+
       const { addToCart, cartItems, setSingleItem } = useContext(CartContext);
       const [currentTheme, setCurrentTheme] = useState(null);
       
@@ -139,9 +140,14 @@
 
                         <HStack  gap={2} mt='-15px'>
                           <Badge variant='outline' colorScheme='green'  >{product.inStock ? 'In Stock' : 'Out of Stock'}</Badge>
+                          {product.deliveryFee ?<Badge  style={{display: 'flex', gap: '2px'}} className='delivery' >
+                            <CiDeliveryTruck className='icon-truck'/> Delivery Fee Ksh{product.deliveryFee}
+                          </Badge>: 
                           <Badge  style={{display: 'flex', gap: '2px'}} className='delivery' >
                             <CiDeliveryTruck className='icon-truck'/> Free Delivery
                           </Badge>
+                          }
+                          
                         </HStack>
                       </Stack>
                     </CardBody>

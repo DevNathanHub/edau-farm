@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 import { CiLogin } from "react-icons/ci";
 import { RiAccountPinCircleLine } from "react-icons/ri";
 import { LuBaggageClaim } from "react-icons/lu";
@@ -12,7 +11,7 @@ import { Link as ChakraLink } from '@chakra-ui/react'
 import { Avatar, Box, Button, List, ListItem, Stack } from "@chakra-ui/react";
 import { useUser } from "../../Context/userContext";
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
-import { ChevronDownIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon, CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import classNames from "classnames";
 import "./Navbar.css";
 import Cart from "../../Components/Shop/Cart";
@@ -47,13 +46,13 @@ const Navbar = () => {
         <h4>Edau<span className='primary'>Honey</span></h4>
       </ChakraLink>
       <ThemeContext />
-      <button
-        className="navbar-toggler"
-        type="button"
+      <Button
+        
+        
         onClick={toggleMenu}
       >
-        {isOpen ? <HiOutlineX /> : <HiOutlineMenuAlt3 />}
-      </button>
+        {isOpen ? <CloseIcon /> : <HamburgerIcon />}
+      </Button>
 
       <div
         className={classNames("collapse navbar-collapse collapse-section", {

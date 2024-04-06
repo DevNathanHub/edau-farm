@@ -3,12 +3,13 @@
     import bannerImg from '../../assets/honey-acacia.png';
     import { Button, Stack } from '@chakra-ui/react';
     import { ArrowForwardIcon } from '@chakra-ui/icons';
-    import { Link } from 'react-router-dom';
+    import { Link, useNavigate } from 'react-router-dom';
     import AboutUs from '../AboutUs/AboutUs';
     import FAQ from '../FAQ/FAQ';
     import { FaLocationDot } from 'react-icons/fa6';
 
     const Hero = () => {
+        const navigate = useNavigate();
         return (
             <div className='banner'>
 
@@ -21,7 +22,7 @@
                         <p>Find everything you need for your everyday life enriched with the goodness of Acacia flowers</p>
                         <div>Updated single product view and checkout component</div>
 
-                        <Button rightIcon={<ArrowForwardIcon/>} colorScheme='teal' variant='outline' marginTop='20px'>
+                        <Button rightIcon={<ArrowForwardIcon/>} colorScheme='teal' variant='outline' marginTop='20px' onClick={() => {navigate("/shop")}}>
                             <Link to='/shop'> Shop Now </Link>
                         </Button>
                     </div>

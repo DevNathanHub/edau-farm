@@ -22,7 +22,8 @@ const EditProductModal = ({ isOpen, onClose, productId }) => {
     price: 0,
     description: [],
     imageUrl: [],
-    variations: [{ size: '', quantity: 0 }]
+    variations: [{ size: '', quantity: 0 }],
+    deliveryFee: 0 // Step 1: Add deliveryFee in the initial state
   });
   const [fileList, setFileList] = useState([]);
   const [uploadDisabled, setUploadDisabled] = useState(true);
@@ -145,6 +146,16 @@ const EditProductModal = ({ isOpen, onClose, productId }) => {
               value={formData.price}
               onChange={handleInputChange}
               placeholder="Enter product price"
+            />
+          </FormControl>
+          <FormControl mb="4"> {/* Step 2: Add deliveryFee input field */}
+            <FormLabel>Delivery Fee</FormLabel>
+            <Input
+              type="number"
+              name="deliveryFee"
+              value={formData.deliveryFee}
+              onChange={handleInputChange}
+              placeholder="Enter delivery fee"
             />
           </FormControl>
           <FormControl mb="4">

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
-import { toast } from 'react-toastify';
+import { useToast } from '@chakra-ui/react'; // Import Chakra UI's useToast
 
 export const CartContext = createContext();
 
@@ -7,17 +7,16 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [singleItem, setSingleItem] = useState(null);
+  const toast = useToast(); // Initialize Chakra UI's toast hook
 
   useEffect(() => {
     // Fetch cart items when component mounts
     fetchCart();
   }, []); // Empty dependency array ensures it runs only once on mount
-  
+
   useEffect(() => {
     calculateTotalPrice();
-  }, [cartItems]); 
-
-  
+  }, [cartItems]);
 
   const fetchCart = () => {
     const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
@@ -27,29 +26,38 @@ export const CartProvider = ({ children }) => {
   };
 
   const addToCart = (product) => {
-    // Check if the product already exists in the cart
-    const existingProductIndex = cartItems.findIndex((item) => item.id === product.id);
-    
+    const existingProductIndex = cartItems.findIndex((item) => item._id === product._id);
+
     if (existingProductIndex !== -1) {
-      // If product exists, increment its quantity
       const updatedCartItems = [...cartItems];
       updatedCartItems[existingProductIndex].quantity += 1;
       setCartItems(updatedCartItems);
       localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     } else {
-      // If product does not exist, add it with a quantity of 1
       const updatedCartItems = [...cartItems, { ...product, quantity: 1 }];
       setCartItems(updatedCartItems);
       localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     }
-    toast.success('Added to cart');
+    // Use Chakra UI's toast for success message
+    toast({
+      title: 'Added to cart',
+      status: 'success',
+      duration: 2000,
+      isClosable: true,
+    });
   };
 
   const removeFromCart = (cartItemId) => {
-    const updatedCartItems = cartItems.filter(item => item.id !== cartItemId);
+    const updatedCartItems = cartItems.filter(item => item._id !== cartItemId);
     setCartItems(updatedCartItems);
     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    toast.error('Removed from cart');
+    // Use Chakra UI's toast for removal message
+    toast({
+      title: 'Removed from cart',
+      status: 'error',
+      duration: 2000,
+      isClosable: true,
+    });
     fetchCart();
   };
 
@@ -109,18 +117,18 @@ export const CartProvider = ({ children }) => {
     }
   }, [cartItems]);
 
-  return (  
-    <CartContext.Provider value={{ 
+  return (
+    <CartContext.Provider value={{
       singleItem,
       setSingleItem,
       cartItems,
       addToCart,
-      removeFromCart, 
+      removeFromCart,
       updateCartItemQuantity,
       handleIncrementQuantity,
-      handleDecrementQuantity, 
-      setCartItems, 
-      totalPrice 
+      handleDecrementQuantity,
+      setCartItems,
+      totalPrice
     }}>
       {children}
     </CartContext.Provider>

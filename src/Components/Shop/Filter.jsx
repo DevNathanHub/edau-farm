@@ -15,7 +15,7 @@ const { Option } = Select;
 function Filter({ onApplyFilter }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(1000); // Set a default max value
+  const [maxPrice, setMaxPrice] = useState(100000); // Set a default max value
   const [category, setCategory] = useState('');
   const [categories, setCategories] = useState([]);
 

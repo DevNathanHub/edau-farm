@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, FormControl, FormLabel, Input, VStack, Box, Text, Image, useToast } from "@chakra-ui/react";
+import { Button, FormControl, FormLabel, Input, VStack, Box, Image, useToast } from "@chakra-ui/react";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../firebase';
 import axios from 'axios';
@@ -11,6 +11,7 @@ const AddProduct = () => {
   const [description, setDescription] = useState(['']);
   const [variations, setVariations] = useState([{ size: '', quantity: 0 }]);
   const [images, setImages] = useState([]);
+  const [deliveryFee, setDeliveryFee] = useState(''); // Step 1: Add deliveryFee state
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
@@ -54,6 +55,7 @@ const AddProduct = () => {
         description,
         variations,
         imageUrl: imageUrls,
+        deliveryFee, // Include deliveryFee in formData
       };
       console.log("form data", formData);
       await axios.post(`${baseUrl}/api/products`, formData);
@@ -71,6 +73,7 @@ const AddProduct = () => {
       setDescription(['']);
       setVariations([{ size: '', quantity: 0 }]);
       setImages([]);
+      setDeliveryFee(''); // Reset deliveryFee after submission
   
     } catch (error) {
       toast({
@@ -84,7 +87,6 @@ const AddProduct = () => {
       setLoading(false); // Set loading to false after submission
     }
   };
-  
 
   return (
     <VStack spacing={4}>
@@ -95,6 +97,10 @@ const AddProduct = () => {
       <FormControl>
         <FormLabel>Price</FormLabel>
         <Input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+      </FormControl>
+      <FormControl> {/* Step 2: Add deliveryFee input field */}
+        <FormLabel>Delivery Fee</FormLabel>
+        <Input type="number" value={deliveryFee} onChange={(e) => setDeliveryFee(e.target.value)} />
       </FormControl>
       <Box>
         <FormLabel>Description</FormLabel>

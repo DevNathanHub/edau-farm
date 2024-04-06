@@ -63,8 +63,8 @@ function Product() {
                 {/* Product details */}
                 <Text fontSize="lg" fontWeight="semibold">{singleItem.name}</Text>
                 <Text mt="2" color="gray.600">{singleItem.description[0]}</Text>
-                <Text mt="2" fontSize="xl" fontWeight="bold">${singleItem.price}</Text>
-                <Text mt="1" fontSize="sm" color="gray.600">Delivery Fee: ${singleItem.deliveryFee}</Text>
+                <Text mt="2" fontSize="xl" fontWeight="bold">Ksh {singleItem.price}</Text>
+                <Text mt="1" fontSize="sm" color="gray.600">Delivery Fee: Ksh {singleItem.deliveryFee}</Text>
                 <Text mt="1" fontSize="sm">Size: {singleItem.variations[0].size}</Text>
                 <Text fontSize="sm">In Stock: {singleItem.variations[0].quantity}</Text>
 
