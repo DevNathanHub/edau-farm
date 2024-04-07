@@ -57,15 +57,16 @@ function Team() {
       <Text fontSize="2xl" fontWeight="bold" mb="4">
         Our Team
       </Text>
-      <Flex flexWrap="wrap" gap="20px">
+      <Flex flexWrap="wrap" gap="10px" justifyContent="center" width='100%'>
         {teamMembers.map((member, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 50 }}
             animate={controls}
             transition={{ duration: 0.5, delay: index * 0.2 }}
+            style={{ width: "350px" }} // Set a minimum width for each item
           >
-            <Box maxW="md" borderWidth="1px" borderRadius="lg" overflow="hidden" width={{ base: "100%", sm: "50%" }} mb="4">
+            <Box maxW="md" borderWidth="1px" borderRadius="lg" overflow="hidden" width="100%" mb="4">
               <Flex p="6" align="center">
                 <Avatar src={member.avatar} />
                 <Box ml="4">

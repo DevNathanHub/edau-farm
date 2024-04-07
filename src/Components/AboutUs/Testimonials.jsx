@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { VStack, Avatar, Text, Box, Stack, Badge, Flex } from '@chakra-ui/react';
+import { RiDoubleQuotesL, RiDoubleQuotesR } from "react-icons/ri";
 
 const testimonials = [
   {
@@ -72,9 +73,10 @@ function Testimonials() {
             initial={{ opacity: 0, y: 50 }}
             animate={controls}
             transition={{ duration: 0.5, delay: index * 0.2 }}
+
           >
-            <Box maxW="lg" borderWidth="1px" borderRadius="lg" overflow="hidden" width={{ base: "100%", sm: "50%" }} mb="4" >
-              <Flex p="6" align="center">
+            <Box maxW="lg" borderWidth="1px" borderRadius="lg" overflow="hidden" width="300px" mb="4" >
+              <Flex p="6" align="center" mb='-40px'>
                 <Avatar src={testimonial.avatar} />
                 <Box ml="4">
                   <Text fontWeight="bold">{testimonial.name}</Text>
@@ -84,7 +86,7 @@ function Testimonials() {
 
               <Box p="6">
                 <Text fontSize="md" fontStyle="italic" mb="4">
-                  {testimonial.content}
+                  <RiDoubleQuotesL/> {testimonial.content}<RiDoubleQuotesR/>
                 </Text>
                 <Stack direction="row" spacing={1} mb="4">
                   {[...Array(testimonial.rating)].map((_, i) => (
