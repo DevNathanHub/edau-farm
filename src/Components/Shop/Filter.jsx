@@ -33,7 +33,7 @@ function Filter({ onApplyFilter }) {
   }, []);
 
   const handleApplyFilter = () => {
-    toast(`Category: ${category}, Price Range: $${minPrice} - $${maxPrice}`);
+    toast(`Category: ${category}, Price Range: Ksh ${minPrice} - Ksh ${maxPrice}`);
     onApplyFilter({ category, minPrice, maxPrice });
     console.log(category, minPrice, maxPrice);
     closeDrawer();

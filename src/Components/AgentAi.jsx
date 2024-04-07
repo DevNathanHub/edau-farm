@@ -40,7 +40,7 @@ function ChatToggleButton() {
           as="iframe"
           src="https://embed.fixie.ai/agents/09b975a3-b172-40a5-8591-8b412465a66d?debug=1"
           allow="clipboard-write"
-          width="400px"
+          width="350px"
           height="500px"
           border="none"
           position="fixed"

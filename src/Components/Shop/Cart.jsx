@@ -74,7 +74,7 @@ function Cart() {
 
           <DrawerBody>
             <Card className='cart-items' variant='outline' borderRadius='10px' p={4}>
-              {cartItems.map((item, index) => (
+              {cartItems.length !== 0? cartItems.map((item, index) => (
                 <Box key={index} style={{marginBottom: '10px'}} >
                   <Stack direction="row" alignItems="center" spacing={4} >
                     <Image
@@ -121,7 +121,12 @@ function Cart() {
 
                 </Box>
                             
-              ))}
+              )) : (
+                  <div>
+                    Your Cart is Empty
+                  </div>
+              )
+            }
             </Card>
           </DrawerBody>
 
