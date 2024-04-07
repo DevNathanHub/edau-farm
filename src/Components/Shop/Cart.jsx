@@ -117,7 +117,7 @@ function Cart() {
                       <Badge onClick={() => handleIncrementQuantity(item.id)} style={{cursor: 'pointer'}}>+</Badge>
                     </div>
                     <div className='cart-price'>Ksh {item.price}</div>
-                    <Text mt="1" fontSize="md">Size: {item.variations[0].size}</Text>
+                    <Text mt="1" fontSize="md">Size: {item.variations && item.variations.length > 0 && item.variations[0].size}</Text>
 
                   </HStack>  
                   <div className='delete-cart-item' onClick={() => handleRemove(item)}><DeleteIcon className='remove-icon' title='remove'/></div>
