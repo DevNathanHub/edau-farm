@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { PiShoppingCartLight } from "react-icons/pi";
+import { BsCart4 } from "react-icons/bs";
 import { CartContext } from '../../Context/CartContext';
 import { Badge, Button, Image, Stack, Text, useMediaQuery, Tooltip, useDisclosure, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Modal, Card, Divider, HStack, Box, Link } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
@@ -45,8 +45,8 @@ function Cart() {
   return (
     <>
       <div onClick={openDrawer} className="cart-icon">
-        <PiShoppingCartLight size={30} color='blue'/>
-        <Badge bg='primary' className='cart-badge' pill>{cartItems.length > 0 && <span className="cart-count">{cartItems.length}</span>}</Badge>
+        <BsCart4 size={25} color='#118c4f' className='cart-icon-bs'/>
+        <Badge  className='cart-badge' variant='outline'>{cartItems.length > 0 && <span className="cart-count">{cartItems.length}</span>}</Badge>
       </div>
       <Modal isOpen={isFullDescriptionModalOpen} onClose={onFullDescriptionModalClose}>
           <ModalOverlay />
@@ -117,7 +117,7 @@ function Cart() {
                       <Badge onClick={() => handleIncrementQuantity(item.id)} style={{cursor: 'pointer'}}>+</Badge>
                     </div>
                     <div className='cart-price'>Ksh {item.price}</div>
-                    <Text mt="1" fontSize="md">Size: {item.variations && item.variations.length > 0 && item.variations[0].size}</Text>
+                    <div>Size: {item.variations && item.variations.length > 0 && item.variations[0].size}</div>
 
                   </HStack>  
                   <div className='delete-cart-item' onClick={() => handleRemove(item)}><DeleteIcon className='remove-icon' title='remove'/></div>

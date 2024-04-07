@@ -1,35 +1,41 @@
 import React, { useEffect } from 'react';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Confetti from 'react-confetti';
+import {  Text, useToast } from '@chakra-ui/react';
 import { useWindowSize } from 'react-use';
 
 function Success() {
   const navigate = useNavigate();
   const { width, height } = useWindowSize();
+  const toast = useToast(); // Initialize Chakra UI toast
 
   useEffect(() => {
-
     const redirectTimer = setTimeout(() => {
-      navigate('/');
+      navigate('/shop');
       window.location.reload();
-
     }, 7000);
-   
 
     // Cleanup the timer when the component unmounts
     return () => clearTimeout(redirectTimer);
   }, [navigate]);
-  
-    toast.success('Success!', { autoClose: 2000 });
+
+  // Show Chakra UI success toast
+  useEffect(() => {
+    toast({
+      title: 'Success!',
+      status: 'success',
+      duration: 2000,
+      isClosable: true,
+    });
+  }, [toast]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', margin: "40px"  }}>
       {/* Your success message content */}
-      <div style={{ marginBottom: '20px', fontSize: '24px' }}>Success</div>
+      <Text fontSize='6xl'>Success</Text>
 
       {/* Additional content */}
-      <p>This is some additional content. You can add more elements here.</p>
+      <Text fontSize='4xl' ><p>Welcome! Explore our collection of organic honey varieties, crafted with care by local beekeepers. Taste the sweetness of nature's finest creation. 🍯🌿</p></Text>
 
       {/* Confetti effect */}
       <Confetti width={width} height={height} />

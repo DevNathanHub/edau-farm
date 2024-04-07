@@ -2,20 +2,18 @@ import React, { useState } from "react";
 import { CiLogin } from "react-icons/ci";
 import { RiAccountPinCircleLine } from "react-icons/ri";
 import { LuBaggageClaim } from "react-icons/lu";
-import { IoCreateOutline } from "react-icons/io5";
+import { IoCreateOutline, IoCartOutline } from "react-icons/io5"; // Added IoCartOutline
 import { TbJewishStar } from "react-icons/tb";
 import { HiOutlineLogout } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { Link as ReactRouterLink } from 'react-router-dom'
-import { Link as ChakraLink } from '@chakra-ui/react'
-import { Avatar, Box, Button, List, ListItem, Stack } from "@chakra-ui/react";
-import { useUser } from "../../Context/userContext";
-import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
+import { Link as ChakraLink, Text, Avatar, Box, Button, Stack, Menu, MenuButton, MenuList, MenuItem, List, ListItem, HStack, Icon } from '@chakra-ui/react'
 import { ChevronDownIcon, CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import classNames from "classnames";
 import "./Navbar.css";
 import Cart from "../../Components/Shop/Cart";
 import ThemeContext from "../../Context/ThemeContext";
+import { useUser } from "../../Context/userContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,18 +41,21 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light ">
       <ChakraLink as={ReactRouterLink} className="navbar-brand logo-section" to="/">
-        <h4>Edau<span className='primary'>Honey</span></h4>
+        <HStack><Text fontSize='3xl'>Edau<span className='primary'>Honey</span></Text></HStack>
       </ChakraLink>
       <ThemeContext />
-      <Button
+    
+      
+      <HStack
         className="navbar-toggler"
         type="button"
-        variant='outline'
-        onClick={toggleMenu}
+        fontSize={20}
       >
-        {isOpen ? <CloseIcon /> : <HamburgerIcon />}
-      </Button>
-
+        <Cart/>
+        {isOpen ? <Icon as={CloseIcon}   w={7} h={7} color='#118c4f' onClick={toggleMenu}/> : <Icon as={HamburgerIcon} w={7} h={7} color='#118c4f' onClick={toggleMenu}/> }
+       
+      </HStack>
+      
       <div
         className={classNames("collapse navbar-collapse collapse-section", {
           show: isOpen,
@@ -65,21 +66,21 @@ const Navbar = () => {
             <ListItem className="nav-item">
               <ChakraLink
                 as={ReactRouterLink}
-                to="/shop"
-                className={classNames("nav-link navbar-links", { "selected": selectedLink === "shop" })}
-                onClick={() => handleLinkClick("shop")}
+                to="/"
+                className={classNames("nav-link navbar-links", { "selected": selectedLink === "home" })}
+                onClick={() => handleLinkClick("home")}
               >
-                Shop
+                Home
               </ChakraLink>
             </ListItem>
             <ListItem className="nav-item">
               <ChakraLink
                 as={ReactRouterLink}
-                to="/about"
-                className={classNames("nav-link navbar-links", { "selected": selectedLink === "about" })}
-                onClick={() => handleLinkClick("about")}
+                to="/shop"
+                className={classNames("nav-link navbar-links", { "selected": selectedLink === "shop" })}
+                onClick={() => handleLinkClick("shop")}
               >
-                About Us
+                Shop
               </ChakraLink>
             </ListItem>
             <ListItem className="nav-item">

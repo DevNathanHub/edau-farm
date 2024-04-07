@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { motion, useAnimation } from 'framer-motion';
 import { VStack, Avatar, Text, Box, Stack, Badge, Flex } from '@chakra-ui/react';
 
 const testimonials = [
@@ -33,35 +34,68 @@ const testimonials = [
 ];
 
 function Testimonials() {
+  const controls = useAnimation();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const elementOffset = document.getElementById('testimonials-section').offsetTop;
+      if (scrollPosition > elementOffset) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isVisible) {
+      controls.start({ opacity: 1, y: 0 });
+    }
+  }, [isVisible, controls]);
+
   return (
-    <VStack spacing="4" align="start">
+    <VStack spacing="4" align="start" id="testimonials-section">
       <Text fontSize="2xl" fontWeight="bold" mb="4">
         Testimonials
       </Text>
       <Flex flexWrap="wrap" gap="20px">
         {testimonials.map((testimonial, index) => (
-          <Box key={index} maxW="lg" borderWidth="1px" borderRadius="lg" overflow="hidden" width={{ base: "100%", sm: "50%" }} mb="4" >
-            <Flex p="6" align="center">
-              <Avatar src={testimonial.avatar} />
-              <Box ml="4">
-                <Text fontWeight="bold">{testimonial.name}</Text>
-                <Text fontSize="sm">{testimonial.role}</Text>
-              </Box>
-            </Flex>
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 50 }}
+            animate={controls}
+            transition={{ duration: 0.5, delay: index * 0.2 }}
+          >
+            <Box maxW="lg" borderWidth="1px" borderRadius="lg" overflow="hidden" width={{ base: "100%", sm: "50%" }} mb="4" >
+              <Flex p="6" align="center">
+                <Avatar src={testimonial.avatar} />
+                <Box ml="4">
+                  <Text fontWeight="bold">{testimonial.name}</Text>
+                  <Text fontSize="sm">{testimonial.role}</Text>
+                </Box>
+              </Flex>
 
-            <Box p="6">
-              <Text fontSize="md" fontStyle="italic" mb="4">
-                {testimonial.content}
-              </Text>
-              <Stack direction="row" spacing={1} mb="4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Badge key={i} variant='ghost' cursor='default'>
-                    ⭐
-                  </Badge>
-                ))}
-              </Stack>
+              <Box p="6">
+                <Text fontSize="md" fontStyle="italic" mb="4">
+                  {testimonial.content}
+                </Text>
+                <Stack direction="row" spacing={1} mb="4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Badge key={i} variant='ghost' cursor='default'>
+                      ⭐
+                    </Badge>
+                  ))}
+                </Stack>
+              </Box>
             </Box>
-          </Box>
+          </motion.div>
         ))}
       </Flex>
     </VStack>

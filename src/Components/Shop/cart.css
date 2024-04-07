@@ -5,7 +5,9 @@
     justify-content: center;
     cursor: pointer;
 }
-
+.cart-icon-bs{
+    vertical-align: middle;
+}
 .cart-badge{
    margin-top: -20px;
    

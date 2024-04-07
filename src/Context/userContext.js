@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { auth } from '../firebase';
-import { toast } from 'react-toastify';
+import { useToast } from '@chakra-ui/react';
 
 // Create a UserContext
 const UserContext = createContext();
@@ -8,6 +8,7 @@ const UserContext = createContext();
 // Create a UserProvider component to provide user data to its children
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const toast = useToast(); // Initialize Chakra UI toast
 
   // Load user data from localStorage on component mount
   useEffect(() => {
@@ -33,7 +34,13 @@ export const UserProvider = ({ children }) => {
     auth.signOut(); 
     setUser(null); 
     localStorage.removeItem('user');
-    toast.success('Logged out successfully!');
+    // Show Chakra UI success toast on logout
+    toast({
+      title: 'Logged out successfully!',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    });
   };
 
   return (

@@ -4,6 +4,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  width: 95%;
 }
 
 .navbar .logo {
@@ -35,6 +36,9 @@
 }
 .nav-link.navbar-links.selected {
   color: #118c4f; /* Change this color to whatever you prefer */
+}
+.logo-section:hover{
+  text-decoration: none;
 }
 .navbar .menu-icon {
   font-size: 1.5rem;
@@ -110,6 +114,9 @@
 }
 /* Media Query for Screens Smaller Than 768px */
 @media (max-width: 768px) {
+  .cart-section{
+    display: none;
+  }
   .navbar .links {
     display: none;
     position: absolute;

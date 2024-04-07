@@ -90,7 +90,7 @@
 
       const handlePurchaseItem = (product) => {
         setSingleItem(product);
-        navigate('/shop/checkout');
+        navigate('/shop/single-item-checkout');
       };
 
       return (
