@@ -32,7 +32,7 @@ const Signup = () => {
         const storedUser = JSON.parse(localStorage.getItem('user'));
         if (storedUser && storedUser.uid) {
             toast.info("User exists. Continue shopping or logout to change accounts.");
-            navigate('/shop');
+            navigate('/success');
         }
     }, [navigate, toast]);
 
@@ -65,7 +65,7 @@ const Signup = () => {
                 if(response.data.newUser){
                     const newUser = response.data.newUser;
                     saveUser(newUser);
-                    navigate('/shop');
+                    navigate('/success');
                     setShowConfetti(true); // Display confetti on successful signup
                     toast({
                         title: "Signup Successful",
@@ -137,7 +137,7 @@ const Signup = () => {
             if(response.data.newUser){
                 const newUser = response.data.newUser;
                 saveUser(newUser);
-                navigate('/shop');
+                navigate('/success');
                 setShowConfetti(true); // Display confetti on successful signup
                 toast({
                     title: "Signup Successful",

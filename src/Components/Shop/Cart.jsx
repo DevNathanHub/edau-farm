@@ -46,7 +46,7 @@ function Cart() {
     <>
       <div onClick={openDrawer} className="cart-icon">
         <BsCart4 size={25} color='#118c4f' className='cart-icon-bs'/>
-        <Badge  className='cart-badge' variant='ghost'>{cartItems.length > 0 && <span className="cart-count">{cartItems.length}</span>}</Badge>
+        <Badge  className='cart-badge' variant='ghost' colorScheme='teal'>{cartItems.length > 0 && <span className="cart-count">{cartItems.length}</span>}</Badge>
       </div>
       <Modal isOpen={isFullDescriptionModalOpen} onClose={onFullDescriptionModalClose}>
           <ModalOverlay />

@@ -41,7 +41,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light ">
       <ChakraLink as={ReactRouterLink} className="navbar-brand logo-section" to="/">
-        <HStack><Text fontSize='3xl'>Edau<span className='primary'>Honey</span></Text></HStack>
+        <HStack><Text fontSize='3xl' colorScheme="teal">Edau<span className='primary'>Honey</span></Text></HStack>
       </ChakraLink>
       <ThemeContext />
     
