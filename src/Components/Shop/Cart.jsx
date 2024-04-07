@@ -74,14 +74,16 @@ function Cart() {
 
           <DrawerBody>
             <Card className='cart-items' variant='outline' borderRadius='10px' p={4}>
-              {cartItems.length !== 0? cartItems.map((item, index) => (
+              {cartItems.length !== 0 ? cartItems.map((item, index) => (
                 <Box key={index} style={{marginBottom: '10px'}} >
                   <Stack direction="row" alignItems="center" spacing={4} >
-                    <Image
-                      src={item.imageUrl[0]}
-                      alt={item.name}
-                      style={{ maxWidth: '50px', objectFit: 'contain', borderRadius: '10px' }}
-                    />
+                    {item.imageUrl && item.imageUrl.length > 0 && (
+                      <Image
+                        src={item.imageUrl[0]}
+                        alt={item.name}
+                        style={{ maxWidth: '50px', objectFit: 'contain', borderRadius: '10px' }}
+                      />
+                    )}
                     <Stack>
                       <Text mb={-2} onClick={() => {navigate(`/shop/product/${item._id } `); setSingleItem(item)}}><Link >{item.name}</Link></Text>
                       {isLargerThan30 ? (
@@ -97,6 +99,8 @@ function Cart() {
                           mr={4}
                         />
                         </Tooltip>
+                        <Text mt="1" fontSize="md">Size: {item.variations[0].size}</Text>
+
                       </HStack>
                   ) : null}
                     </Stack>
@@ -121,11 +125,9 @@ function Cart() {
 
                 </Box>
                             
-              )) : (
-                  <div>
-                    Your Cart is Empty
-                  </div>
-              )
+              )) : <div>
+                Your Cart is Empty
+              </div>
             }
             </Card>
           </DrawerBody>
