@@ -48,8 +48,8 @@ const Navbar = () => {
       
       <HStack
         className="navbar-toggler"
-        type="button"
         fontSize={20}
+        border='none'
       >
         <Cart/>
         {isOpen ? <Icon as={CloseIcon}   w={7} h={7} color='#118c4f' onClick={toggleMenu}/> : <Icon as={HamburgerIcon} w={7} h={7} color='#118c4f' onClick={toggleMenu}/> }
