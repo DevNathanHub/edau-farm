@@ -5,14 +5,20 @@
 .banner .container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    margin: 4rem auto;
+    margin: 1rem auto;
     justify-content: center;
     align-items: center;
     padding: 1rem;
+
+    
 }
 
 .banner .left {
     padding: 1rem;
+    border-left: 4px solid #118c4f;
+    border-radius: 20px;
+    padding-left: 40px;
+
 }
 
 .banner h1 {
@@ -30,6 +36,8 @@
 .banner .img-container {
     width: 100%;
     display: flex;
+    border-right: 4px solid #118c4f;
+    border-radius: 20px;
 }
 
 .banner img {

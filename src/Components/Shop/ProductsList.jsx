@@ -7,7 +7,7 @@ const ProductList = ({ products }) => {
       {products.map((product) => (
         <Box key={product._id} p={4} borderWidth="1px" borderRadius="lg">
           <Image src={product.imageUrl[0]} alt={product.name} />
-          <Text mt={2} fontWeight="semibold" fontSize="xl">
+          <Text mt={2} fontWeight="semibold" fontSize="4xl">
             {product.name}
           </Text>
           <Text mt={2}>{product.description}</Text>

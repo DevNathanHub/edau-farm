@@ -1,11 +1,22 @@
 import React, { useState } from 'react';
 import { useDeliveryAddress } from '../../Context/deliveryAddressContext';
-import { Card, CardBody, CardFooter, Button, Heading, Text, Input, InputGroup, Stack } from '@chakra-ui/react';
+import { Card, CardBody, CardFooter, Button, Heading, Text, Input, InputGroup, Stack, HStack, VStack, Grid } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-
+import { 
+     
+    Modal, 
+    ModalOverlay, 
+    ModalContent, 
+    ModalHeader, 
+    ModalBody, 
+    ModalFooter, 
+    ModalCloseButton, 
+    useDisclosure 
+} from '@chakra-ui/react';
 function DeliveryAddress() {
     const { deliveryAddress, updateDeliveryAddress } = useDeliveryAddress();
     const navigate = useNavigate();
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const [address, setAddress] = useState({
         firstName: '',
         lastName: '',
@@ -53,10 +64,16 @@ function DeliveryAddress() {
                     </CardFooter>
                 </Card>
             ) : ( // Edit mode
-                <Card>
-                    <Heading>Update Delivery Address</Heading>
-                    <CardBody>
-                        <InputGroup>
+            <>
+            <Button onClick={onOpen}>Update Delivery Address</Button>
+
+            <Modal isOpen={isOpen} onClose={onClose} size="lg">
+                <ModalOverlay />
+                <ModalContent m={4}>
+                    <ModalHeader>Update Delivery Address</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Grid  gap={6}>
                             <Input 
                                 value={address.firstName} 
                                 onChange={(e) => setAddress({ ...address, firstName: e.target.value })}
@@ -92,13 +109,17 @@ function DeliveryAddress() {
                                 onChange={(e) => setAddress({ ...address, comment: e.target.value })}
                                 placeholder="Comment"
                             />
-                        </InputGroup>
-                    </CardBody>
-                    <CardFooter>
-                        <Button onClick={handleSubmit}>Update</Button>
-                        <Button onClick={toggleEditMode}>Cancel</Button>
-                    </CardFooter>
-                </Card>
+                        </Grid>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button colorScheme="teal" mr={3} onClick={() => { handleSubmit(); onClose(); }}>
+                            Update
+                        </Button>
+                        <Button variant="ghost" onClick={() => { toggleEditMode(); onClose(); }}>Cancel</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+        </>
             )}
         </div>
     )

@@ -124,7 +124,7 @@
                 // Get the quantity from the cartItem or default to 0 if not found
                 const quantity = cartItem ? cartItem.quantity : 0;
                 return (
-                  <Card key={index} width={{ sm: '350px' }} borderRadius={'30px'} className='shop-card' variant='outline'>
+                  <Card key={index} width={{sm: '300px' }} borderRadius={'30px'} className='shop-card' variant='outline'>
                     <CardBody cursor='pointer'>
                     <Image src={product.imageUrl[0]} alt={product.name} w="100%" h="100%" objectFit="cover" borderRadius='30px' onClick={() => handleViewProduct(product)}/>
 

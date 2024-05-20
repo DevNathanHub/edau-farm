@@ -22,7 +22,7 @@ const Hero = () => {
             <div className='container'>
 
                 {/* Left Side */}
-                <motion.div className='left' initial={{ x: '-100vw' }} animate={{ x: 0 }} transition={{ type: 'spring', stiffness: 120 }}>
+                <motion.div className='left' initial={{ y: '-20vw' }} animate={{ y: 0 }} transition={{ type: 'spring', stiffness: 120 }}>
                     <Text fontSize='4xl'>Explore our wide range of high-quality honey</Text>
                     <Text fontSize='6xl'>Discover Edau Honey Products</Text>
                     <p>Find everything you need for your everyday life enriched with the goodness of Acacia flowers</p>
@@ -34,7 +34,7 @@ const Hero = () => {
 
 
                 {/* Right Side */}
-                <motion.div className='right' initial={{ x: '100vw' }} animate={{ x: 0 }} transition={{ type: 'spring', stiffness: 120 }}>
+                <motion.div className='right' initial={{ y: '20vw' }} animate={{ y: 0 }} transition={{ type: 'spring', stiffness: 120 }}>
                     <div className='img-container'>
                         <img src={bannerImg} alt='' />
                     </div>
