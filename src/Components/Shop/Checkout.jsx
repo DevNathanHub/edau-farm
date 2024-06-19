@@ -21,6 +21,7 @@
                           <Card
                             direction={{ base: 'column', sm: 'row' }}
                             overflow='hidden'
+                            borderRadius='20px'
                             variant='outline'
                           >
                             <Image
@@ -30,11 +31,12 @@
                               alt='Caffe Latte'
                             />
 
-                            <Stack>
-                              <CardBody>
+                            <Stack >
+                              <CardBody maxW='300px'>
                                 <Heading size='md'>{item.name} </Heading>
 
-                                <Text py='2'> {item.description} </Text>
+                                <Text py='2' isTruncated> {item.description} </Text>
+                                <Text  fontSize='2xl'>Ksh {item.price}</Text>
                               </CardBody>
 
                               

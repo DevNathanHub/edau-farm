@@ -23,6 +23,7 @@ import Success from "./Components/Success/success";
 import TempShop from "./Components/Shop/TempShop";
 import Upload from "./Components/ImageUpload/Upload";
 import SingleItemCheckout from "./Components/Shop/SingleItemCheckout";
+import Orders from "./Components/UserProfile/Orders";
 
 function App() {
 
@@ -42,6 +43,8 @@ function App() {
 				<Route path="/shop/product/:id" element={<Product/>}/>
 				<Route path="/shop/checkout" element={<Checkout/>}/>
 				<Route path="/shop/single-item-checkout" element={<SingleItemCheckout/>}/>
+				<Route path="/orders" element={<Orders/>} /> 
+
 				<Route path="/contact" element={<Contact/>} /> 
 				<Route path="/faq" element={<FAQ/>} /> 
 				<Route path="/about" element={<AboutUs/>} /> 

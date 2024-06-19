@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CiLogin } from "react-icons/ci";
 import { RiAccountPinCircleLine } from "react-icons/ri";
 import { LuBaggageClaim } from "react-icons/lu";
-import { IoCreateOutline, IoCartOutline } from "react-icons/io5"; // Added IoCartOutline
+import { IoCreateOutline } from "react-icons/io5"; // Added IoCartOutline
 import { TbJewishStar } from "react-icons/tb";
 import { HiOutlineLogout } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
@@ -63,7 +63,7 @@ const Navbar = () => {
       >
         <Box>
           <List className="navbar-nav ml-auto" onClick={closeMenu}>
-            <ListItem className="nav-item">
+            <ListItem className="nav-item" gap={5}>
               <ChakraLink
                 as={ReactRouterLink}
                 to="/"
@@ -93,16 +93,7 @@ const Navbar = () => {
                 Contact Us
               </ChakraLink>
             </ListItem>
-            <ListItem className="nav-item">
-              <ChakraLink
-                as={ReactRouterLink}
-                to="/faq"
-                className={classNames("nav-link navbar-links", { "selected": selectedLink === "faq" })}
-                onClick={() => handleLinkClick("faq")}
-              >
-                FAQ
-              </ChakraLink>
-            </ListItem>
+           
             <ListItem className="nav-cart">
               <div className="cart-section">
                 <Cart />
@@ -111,7 +102,7 @@ const Navbar = () => {
           </List>
         </Box>
 
-        <div className="user-info">
+        <Box className="user-info">
           {user ? (
             <div>
               <Button onClick={handleAdminDash} leftIcon={<IoCreateOutline />} colorScheme='blue' variant='solid' size='sm' borderRadius='30px' marginRight='10px'>
@@ -147,7 +138,7 @@ const Navbar = () => {
               </Stack>
             </div>
           )}
-        </div>
+        </Box>
       </div>
     </nav>
   );

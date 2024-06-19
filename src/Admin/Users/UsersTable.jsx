@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Table,
   Thead,
@@ -13,37 +13,48 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
+  ModalFooter,
   FormControl,
   FormLabel,
   Input,
   useToast,
 } from '@chakra-ui/react';
+import axios from 'axios';
+import baseUrl from '../../baseUrl';
 
 function UsersTable() {
-  const [users, setUsers] = useState([
-    { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
-    { id: 2, name: 'Jane Doe', email: 'jane@example.com', role: 'User' },
-    { id: 3, name: 'Alice Smith', email: 'alice@example.com', role: 'User' },
-  ]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
+    displayName: '',
     email: '',
     role: '',
+    photoURL: '',
   });
   const [selectedUserId, setSelectedUserId] = useState(null);
-
   const toast = useToast();
 
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
+  useEffect(() => {
+    // Fetch users from the backend
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}/api/users`);
+        setUsers(response.data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+        toast({
+          title: 'Error fetching users.',
+          description: error.message,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    };
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-    setFormData({ name: '', email: '', role: '' });
-    setSelectedUserId(null);
-  };
+    fetchUsers();
+  }, [toast]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -53,62 +64,80 @@ function UsersTable() {
     }));
   };
 
-  const handleSaveUser = () => {
-    if (selectedUserId) {
-      console.log('Update user with ID:', selectedUserId);
+  const handleSaveUser = async () => {
+    setIsEditModalOpen(false);
+    try {
+      if (selectedUserId) {
+        // Update user
+        await axios.put(`${baseUrl}/api/user/edit/${selectedUserId}`, formData);
+        toast({
+          title: 'User updated.',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+      // Refresh users
+      const response = await axios.get(`${baseUrl}/api/users`);
+      setUsers(response.data);
+    } catch (error) {
+      console.error('Error:', error);
       toast({
-        title: 'User updated.',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      });
-    } else {
-      console.log('Add new user:', formData);
-      const newUser = { id: Date.now(), ...formData };
-      setUsers([...users, newUser]);
-      toast({
-        title: 'User added.',
-        status: 'success',
-        duration: 3000,
+        title: 'Error updating user.',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
         isClosable: true,
       });
     }
-    handleModalClose();
   };
 
   const handleEditUser = (userId) => {
-    console.log('Edit user with ID:', userId);
-    const userToEdit = users.find((user) => user.id === userId);
+    const userToEdit = users.find((user) => user._id === userId);
     setSelectedUserId(userId);
     setFormData({
-      name: userToEdit.name,
+      displayName: userToEdit.displayName,
       email: userToEdit.email,
       role: userToEdit.role,
+      photoURL: userToEdit.photoURL,
     });
-    setIsModalOpen(true);
+    setIsEditModalOpen(true);
   };
 
-  const handleDeleteUser = (userId) => {
-    console.log('Delete user with ID:', userId);
-    setUsers(users.filter((user) => user.id !== userId));
-    toast({
-      title: 'User deleted.',
-      status: 'success',
-      duration: 3000,
-      isClosable: true,
-    });
+  const handleDeleteUser = async () => {
+    try {
+      await axios.delete(`${baseUrl}/api/user/delete/${selectedUserId}`);
+      setUsers(users.filter((user) => user._id !== selectedUserId));
+      toast({
+        title: 'User deleted.',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+      setIsDeleteModalOpen(false);
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        title: 'Error deleting user.',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const openDeleteModal = (userId) => {
+    setSelectedUserId(userId);
+    setIsDeleteModalOpen(true);
   };
 
   return (
     <div>
-      <Button colorScheme="blue" onClick={handleModalOpen} mb="4">
-        Add User
-      </Button>
-
       <Table variant="simple">
         <Thead>
           <Tr>
-            <Th>Name</Th>
+            <Th>Display Name</Th>
             <Th>Email</Th>
             <Th>Role</Th>
             <Th>Actions</Th>
@@ -116,15 +145,15 @@ function UsersTable() {
         </Thead>
         <Tbody>
           {users.map((user) => (
-            <Tr key={user.id}>
-              <Td>{user.name}</Td>
+            <Tr key={user._id}>
+              <Td>{user.displayName}</Td>
               <Td>{user.email}</Td>
               <Td>{user.role}</Td>
               <Td>
-                <Button colorScheme="green" onClick={() => handleEditUser(user.id)} mr="2">
+                <Button colorScheme="green" onClick={() => handleEditUser(user._id)} mr="2">
                   Edit
                 </Button>
-                <Button colorScheme="red" onClick={() => handleDeleteUser(user.id)}>
+                <Button colorScheme="red" onClick={() => openDeleteModal(user._id)}>
                   Delete
                 </Button>
               </Td>
@@ -133,29 +162,74 @@ function UsersTable() {
         </Tbody>
       </Table>
 
-      <Modal isOpen={isModalOpen} onClose={handleModalClose}>
+      {/* Edit User Modal */}
+      <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{selectedUserId ? 'Edit User' : 'Add User'}</ModalHeader>
+          <ModalHeader>Edit User</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl mb="4">
-              <FormLabel>Name</FormLabel>
-              <Input type="text" name="name" value={formData.name} onChange={handleInputChange} />
+              <FormLabel>Display Name</FormLabel>
+              <Input
+                type="text"
+                name="displayName"
+                value={formData.displayName}
+                onChange={handleInputChange}
+              />
             </FormControl>
             <FormControl mb="4">
               <FormLabel>Email</FormLabel>
-              <Input type="email" name="email" value={formData.email} onChange={handleInputChange} />
+              <Input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+              />
             </FormControl>
             <FormControl mb="4">
               <FormLabel>Role</FormLabel>
-              <Input type="text" name="role" value={formData.role} onChange={handleInputChange} />
+              <Input
+                type="text"
+                name="role"
+                value={formData.role}
+                onChange={handleInputChange}
+              />
             </FormControl>
+            <FormControl mb="4">
+              <FormLabel>Photo URL</FormLabel>
+              <Input
+                type="text"
+                name="photoURL"
+                value={formData.photoURL}
+                onChange={handleInputChange}
+              />
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
             <Button colorScheme="blue" onClick={handleSaveUser} mr="2">
               Save
             </Button>
-            <Button onClick={handleModalClose}>Cancel</Button>
+            <Button onClick={() => setIsEditModalOpen(false)}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      {/* Delete User Modal */}
+      <Modal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Delete User</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            Are you sure you want to delete this user?
           </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="red" onClick={handleDeleteUser} mr="2">
+              Delete
+            </Button>
+            <Button onClick={() => setIsDeleteModalOpen(false)}>Cancel</Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </div>
